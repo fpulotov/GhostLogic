@@ -13,7 +13,7 @@
 <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png"/>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;1,400;1,500&family=Manrope:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
 <style>
 /* ── VARIABLES ── */
@@ -225,6 +225,12 @@ nav{
 .about-tag{font-size:.62rem;font-weight:800;background:var(--navy-bg);color:var(--navy);padding:3px 9px;border-radius:999px;letter-spacing:.08em;text-transform:uppercase;}
 .about-quote{font-size:.86rem;color:var(--txt);line-height:1.72;border-left:3px solid var(--gold);padding-left:12px;margin-bottom:14px;font-style:italic;}
 .about-body p{font-size:.83rem;color:var(--txt2);line-height:1.7;margin-bottom:10px;}
+.about-accent{
+  font-family:'Lora',Georgia,serif;
+  font-size:.95rem;font-style:italic;font-weight:500;
+  color:var(--txt);line-height:1.78;margin-bottom:14px;
+  border-left:3px solid var(--gold);padding-left:14px;
+}
 .about-stack{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:16px;padding-top:14px;border-top:1px solid var(--border);}
 .about-stack-label{width:100%;font-size:.68rem;color:var(--txt3);font-weight:600;margin-bottom:4px;}
 .about-stack span{display:inline-flex;align-items:center;gap:4px;font-size:.7rem;font-weight:600;background:var(--bg);border:1px solid var(--border);color:var(--txt2);padding:3px 8px;border-radius:6px;}
@@ -261,12 +267,11 @@ footer{background:var(--navy);padding:24px 16px;padding-bottom:calc(24px + env(s
 .foot-socials a:active{color:var(--gold);}
 .foot-copy{color:rgba(255,255,255,.22);font-size:.68rem;}
 
-/* ── FLOAT ── */
-.float-widget{position:fixed;bottom:14px;right:10px;z-index:89;background:var(--white);border:1px solid var(--border);border-radius:14px;padding:12px 14px;box-shadow:0 8px 28px rgba(27,58,143,.14);max-width:220px;display:none;}
-.float-widget p{font-size:.75rem;color:var(--txt2);line-height:1.5;margin-bottom:9px;}
-.float-widget p strong{color:var(--navy);display:block;margin-bottom:1px;}
-.float-link{display:inline-flex;align-items:center;gap:5px;background:var(--navy);color:#fff;font-size:.74rem;font-weight:700;padding:7px 12px;border-radius:8px;}
-.float-close{position:absolute;top:7px;right:9px;background:none;border:none;cursor:pointer;color:var(--txt3);font-size:.78rem;}
+
+
+
+
+
 
 /* ── CALCULATOR ── */
 .calc-inputs{display:flex;flex-direction:column;gap:16px;margin-bottom:20px;}
@@ -391,7 +396,7 @@ footer{background:var(--navy);padding:24px 16px;padding-bottom:calc(24px + env(s
   .pain-grid{grid-template-columns:repeat(3,1fr);}
   .scenario-grid{grid-template-columns:1fr 1fr;}
   .steps-grid{grid-template-columns:repeat(3,1fr);}
-  .float-widget{bottom:28px;right:18px;max-width:240px;}
+  
 }
 </style>
 </head>
@@ -404,7 +409,7 @@ footer{background:var(--navy);padding:24px 16px;padding-bottom:calc(24px + env(s
       <img src="images/logo.png" alt="GhostLogic AI"/>
       <span class="brand-name">Ghost<span>Logic</span></span>
     </a>
-    <a href="https://t.me/firdavs_0017" class="nav-btn" target="_blank">
+    <a href="https://t.me/ghostlogic_ai" class="nav-btn" target="_blank">
       <i class="fa-brands fa-telegram"></i> Написать Фирдавсу
     </a>
   </div>
@@ -415,7 +420,7 @@ footer{background:var(--navy);padding:24px 16px;padding-bottom:calc(24px + env(s
 <div class="scarcity-bar" id="scarcityBar">
   <div class="scarcity-pulse"></div>
   <span>🔥 Спеццена $240 вместо $300 — осталось <strong>3 места</strong> для бьюти-проектов</span>
-  <a href="https://t.me/firdavs_0017" target="_blank">Забронировать →</a>
+  <a href="https://t.me/ghostlogic_ai" target="_blank">Забронировать →</a>
   <span id="scarcityClose" onclick="document.getElementById('scarcityBar').remove()">✕</span>
 </div>
 
@@ -435,7 +440,7 @@ footer{background:var(--navy);padding:24px 16px;padding-bottom:calc(24px + env(s
         Внедрите ИИ-агента, который закроет запись за 25 секунд — 24/7. Без найма, без зарплаты, без «я сейчас не могу ответить».
       </p>
       <div class="hero-btns fu d4">
-        <a href="https://t.me/firdavs_0017" class="btn-gold" target="_blank">
+        <a href="https://t.me/ghostlogic_ai" class="btn-gold" target="_blank">
           <i class="fa-brands fa-telegram"></i> Забронировать спеццену
         </a>
         <a href="https://t.me/tg_consultant1_bot" class="btn-outline" target="_blank">
@@ -536,7 +541,7 @@ footer{background:var(--navy);padding:24px 16px;padding-bottom:calc(24px + env(s
   <div class="wrap">
     <span class="eyebrow">Сценарии использования</span>
     <h2 class="sec-title">Что именно говорит бот</h2>
-    <p class="sec-sub">Реальные диалоги — бот отвечает так, как вы бы ответили сами.</p>
+    <p class="sec-sub">Бот отвечает так, как вы бы ответили сами.</p>
     <div class="scenario-grid">
 
       <div class="scenario-card">
@@ -773,7 +778,7 @@ footer{background:var(--navy);padding:24px 16px;padding-bottom:calc(24px + env(s
           <li><span class="chk green">✓</span><span class="txt light">Понимание голосовых сообщений</span></li>
           <li><span class="chk green">✓</span><span class="txt light">Напоминания клиентам о визите</span></li>
         </ul>
-        <a href="https://t.me/firdavs_0017" class="btn-outline" style="width:100%;font-size:.88rem;padding:13px;" target="_blank">
+        <a href="https://t.me/ghostlogic_ai" class="btn-outline" style="width:100%;font-size:.88rem;padding:13px;" target="_blank">
           <i class="fa-brands fa-telegram"></i> Забронировать спеццену
         </a>
       </div>
@@ -789,7 +794,7 @@ footer{background:var(--navy);padding:24px 16px;padding-bottom:calc(24px + env(s
           <li><span class="chk gold">✓</span><span class="txt dark">Кнопка «Записаться» ведёт в бота</span></li>
           <li><span class="chk gold">✓</span><span class="txt dark">Постоянные обновления и поддержка</span></li>
         </ul>
-        <a href="https://t.me/firdavs_0017" class="price-cta-ghost" target="_blank">
+        <a href="https://t.me/ghostlogic_ai" class="price-cta-ghost" target="_blank">
           <i class="fa-brands fa-telegram"></i> Забронировать спеццену
         </a>
       </div>
@@ -814,18 +819,19 @@ footer{background:var(--navy);padding:24px 16px;padding-bottom:calc(24px + env(s
         </div>
       </div>
       <p class="about-quote">«Я не просто настраиваю бота — я проектирую логику продаж, которая не даёт клиенту уйти к конкуренту.»</p>
-      <p>Работаю через n8n и проверенный стек — каждую систему собираю и тестирую лично. Не шаблоны, не конструкторы — логика под ваш бизнес.</p>
-      <p>Вы получаете готовое решение через 72 часа и единственного ответственного человека, которому можно написать напрямую.</p>
+      <p class="about-accent">Работаю через n8n и проверенный стек — каждую систему собираю и тестирую лично. Не шаблоны, не конструкторы — логика под ваш бизнес.</p>
+      <p class="about-accent">Вы получаете готовое решение через 72 часа и единственного ответственного человека, которому можно написать напрямую.</p>
       <div class="about-stack">
-        <span class="about-stack-label">Что умеет бот:</span>
+        <span class="about-stack-label">Стек:</span>
         <span><i class="fa-solid fa-brain" style="color:var(--navy);"></i> OpenAI GPT-4o</span>
+        <span><i class="fa-solid fa-database" style="color:var(--navy);"></i> RAG</span>
+        <span><i class="fa-solid fa-microphone" style="color:var(--navy);"></i> Whisper</span>
         <span><i class="fa-solid fa-diagram-project" style="color:var(--navy);"></i> n8n</span>
-        <span><i class="fa-solid fa-bolt" style="color:var(--navy);"></i> Понимает сложные запросы</span>
-        <span><i class="fa-solid fa-shield-check" style="color:var(--navy);"></i> Работает без сбоев</span>
-        <span><i class="fa-brands fa-telegram" style="color:var(--navy);"></i> Telegram</span>
-        <span><i class="fa-solid fa-table-columns" style="color:var(--navy);"></i> Google Sheets</span>
+        <span><i class="fa-brands fa-python" style="color:var(--navy);"></i> Python</span>
+        <span><i class="fa-brands fa-telegram" style="color:var(--navy);"></i> Telegram Bot API</span>
+        <span><i class="fa-solid fa-table-columns" style="color:var(--navy);"></i> Google Sheets API</span>
       </div>
-      <a href="https://t.me/firdavs_0017" class="about-cta" target="_blank">
+      <a href="https://t.me/ghostlogic_ai" class="about-cta" target="_blank">
         <i class="fa-brands fa-telegram" style="color:#229ed9;"></i> Забронировать спеццену
       </a>
     </div>
@@ -873,7 +879,7 @@ footer{background:var(--navy);padding:24px 16px;padding-bottom:calc(24px + env(s
       </div>
       <h2>Ищу 3 проекта из бьюти-сферы для кейса</h2>
       <p>Сделаю из вашего Telegram инструмент, который приносит деньги, а не уведомления. Спеццена <strong style="color:var(--navy);">$240 вместо $300</strong> — в обмен на честный видео-отзыв после запуска.</p>
-      <a href="https://t.me/firdavs_0017" class="btn-gold" target="_blank">
+      <a href="https://t.me/ghostlogic_ai" class="btn-gold" target="_blank">
         <i class="fa-brands fa-telegram"></i> Написать Фирдавсу в Telegram
       </a>
     </div>
@@ -889,25 +895,12 @@ footer{background:var(--navy);padding:24px 16px;padding-bottom:calc(24px + env(s
       <span>GhostLogic AI</span>
     </div>
     <div class="foot-socials">
-      <a href="https://t.me/firdavs_0017" target="_blank" aria-label="Telegram"><i class="fa-brands fa-telegram"></i></a>
+      <a href="https://t.me/ghostlogic_ai" target="_blank" aria-label="Telegram"><i class="fa-brands fa-telegram"></i></a>
       <a href="https://www.instagram.com/ghostlogic_ai/" target="_blank" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
     </div>
     <div class="foot-copy">© 2026 GhostLogic AI</div>
   </div>
 </footer>
-
-
-<!-- FLOAT WIDGET -->
-<div class="float-widget" id="floatWidget">
-  <button class="float-close" id="floatClose" aria-label="Закрыть">✕</button>
-  <p>
-    <strong>Привет, я Фирдавс 👋</strong>
-    Автоматизирую запись для салонов красоты. Пишите — отвечу быстро.
-  </p>
-  <a href="https://t.me/firdavs_0017" class="float-link" target="_blank">
-    <i class="fa-brands fa-telegram"></i> Написать Фирдавсу
-  </a>
-</div>
 
 
 <script>
@@ -955,17 +948,6 @@ footer{background:var(--navy);padding:24px 16px;padding-bottom:calc(24px + env(s
     });
   });
 
-  // Float widget
-  const widget = document.getElementById('floatWidget');
-  const closeBtn = document.getElementById('floatClose');
-  let shown = false, closed = false;
-  window.addEventListener('scroll', () => {
-    if (closed || shown) return;
-    if (window.scrollY > window.innerHeight * 0.8) {
-      widget.style.display = 'block';
-      shown = true;
-    }
-  });
   closeBtn && closeBtn.addEventListener('click', () => {
     widget.style.display = 'none';
     closed = true;
