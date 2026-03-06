@@ -1,590 +1,976 @@
 <!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<html lang="ru">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>GhostLogic AI — ИИ-агент для записи клиентов в Telegram</title>
+<meta name="description" content="Автоматизирую запись клиентов для салонов красоты и косметологии. Бот отвечает за 2 секунды, записывает и сохраняет всё в Google Таблицы. Внедрение за 72 часа."/>
+<meta property="og:title" content="GhostLogic AI — ИИ-агент для салонов красоты"/>
+<meta property="og:description" content="Администратор больше не сидит в телефоне. ИИ-бот сам запишет клиента, напомнит о визите и сохранит данные в таблицу."/>
+<meta property="og:image" content="images/og-image.jpg"/>
+<meta property="og:type" content="website"/>
+<link rel="icon" type="image/x-icon" href="images/favicon.ico"/>
+<link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+<style>
+/* ── VARIABLES ── */
+:root {
+  --gold:#f0a500; --gold-h:#c98b00; --gold-bg:rgba(240,165,0,.09);
+  --navy:#1b3a8f; --navy-d:#122870; --navy-bg:#eef2fb;
+  --bg:#f7f8fc; --bg2:#f0f2f7; --white:#fff;
+  --border:#e2e7f0; --txt:#111827; --txt2:#4b5563; --txt3:#9ca3af;
+  --green:#16a34a; --r:14px;
+}
 
-    <title>GhostLogic AI | Digital Employees That Never Sleep</title>
-    <meta
-      name="description"
-      content="Sales automation with n8n-powered AI agents. Building smart landing pages that qualify leads and sync data to Google Sheets 24/7."
-    />
+/* ── RESET ── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+html{scroll-behavior:smooth;scroll-padding-top:96px;}
+body{font-family:'Manrope',sans-serif;background:var(--bg);color:var(--txt);overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+img{max-width:100%;display:block;}
+a{text-decoration:none;}
+h1,h2,h3,h4{letter-spacing:-.02em;}
 
-    <meta
-      property="og:title"
-      content="GhostLogic AI | Digital Employees Powered by n8n"
-    />
-    <meta
-      property="og:description"
-      content="Integrate AI agents into your business: from Telegram consultations to full CRM and Google Sheets synchronization."
-    />
-    <meta property="og:image" content="favicon.png" />
+/* ── UTILITIES ── */
+.wrap{width:100%;max-width:1100px;margin:0 auto;padding:0 16px;}
+.eyebrow{display:block;text-align:center;font-size:.62rem;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:8px;}
+.sec-title{text-align:center;font-weight:800;font-size:1.55rem;color:var(--navy);line-height:1.15;margin-bottom:10px;}
+.sec-sub{text-align:center;font-size:.9rem;color:var(--txt2);line-height:1.7;margin:0 auto 32px;}
 
-    <link rel="icon" type="image/png" href="favicon.png" />
-    <link rel="apple-touch-icon" href="favicon.png" />
-    <script src="https://cdn.tailwindcss.com"></script>
+/* ── BUTTONS ── */
+.btn-gold{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  background:var(--gold);color:#fff;font-weight:700;font-size:.95rem;
+  padding:15px 20px;border-radius:12px;
+  box-shadow:0 4px 18px rgba(240,165,0,.3);
+  transition:background .2s,transform .15s;
+  border:none;cursor:pointer;
+}
+.btn-gold:active{transform:scale(.97);}
+.btn-gold:hover{background:var(--gold-h);}
+.btn-outline{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  border:2px solid var(--navy);color:var(--navy);
+  font-weight:700;font-size:.95rem;padding:13px 20px;border-radius:12px;
+  transition:background .2s,color .2s;background:transparent;cursor:pointer;
+}
+.btn-outline:active{background:var(--navy);color:#fff;}
 
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-    />
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  background:rgba(247,248,252,.96);backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--border);
+}
+.nav-in{display:flex;align-items:center;justify-content:space-between;padding:11px 16px;}
+.brand{display:flex;align-items:center;gap:8px;}
+.brand img{height:28px;}
+.brand-name{font-weight:800;font-size:.95rem;color:var(--navy);}
+.brand-name span{color:var(--gold);}
+.nav-btn{
+  display:inline-flex;align-items:center;gap:6px;
+  background:var(--navy);color:#fff;font-weight:700;font-size:.75rem;
+  padding:9px 14px;border-radius:10px;
+  box-shadow:0 2px 10px rgba(27,58,143,.2);transition:background .2s;
+}
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Space+Grotesk:wght@700&display=swap"
-      rel="stylesheet"
-    />
+/* ── HERO ── */
+.hero{
+  padding:80px 16px 44px;
+  background:linear-gradient(160deg,#f7f8fc 0%,#eef2fb 100%);
+  position:relative;overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;top:-80px;right:-80px;
+  width:280px;height:280px;
+  background:radial-gradient(circle,rgba(240,165,0,.13),transparent 70%);
+  border-radius:50%;pointer-events:none;
+}
+.hero-inner{position:relative;z-index:1;}
+.hero-label{
+  display:inline-flex;align-items:center;gap:6px;
+  background:var(--gold-bg);border:1px solid rgba(240,165,0,.28);
+  color:var(--gold-h);font-size:.62rem;font-weight:800;
+  letter-spacing:.14em;text-transform:uppercase;
+  padding:4px 11px;border-radius:999px;margin-bottom:16px;
+}
+.hero h1{font-size:2rem;font-weight:900;line-height:1.1;color:var(--navy);margin-bottom:14px;}
+.hero h1 em{font-style:normal;color:var(--gold);}
+.hero-sub{font-size:.93rem;color:var(--txt2);line-height:1.68;margin-bottom:22px;}
+.hero-btns{display:flex;flex-direction:column;gap:10px;margin-bottom:20px;}
+.hero-trust{display:flex;flex-wrap:wrap;gap:8px 16px;font-size:.75rem;color:var(--txt3);}
+.hero-trust span{display:flex;align-items:center;gap:5px;}
+.hero-trust i{color:var(--green);font-size:.7rem;}
+.chat-wrap{margin-top:28px;}
+.chat-card{
+  background:var(--white);border:1px solid var(--border);
+  border-radius:18px;padding:14px;
+  box-shadow:0 12px 40px rgba(27,58,143,.09);
+}
+.chat-head{display:flex;align-items:center;gap:9px;padding-bottom:12px;margin-bottom:12px;border-bottom:1px solid var(--border);}
+.chat-ava{width:34px;height:34px;border-radius:50%;background:var(--navy);flex-shrink:0;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:.72rem;}
+.chat-name{font-size:.82rem;font-weight:700;color:var(--txt);}
+.chat-status{font-size:.66rem;color:#22c55e;display:flex;align-items:center;gap:4px;}
+.dot-live{width:6px;height:6px;border-radius:50%;background:#22c55e;animation:pulse 2s infinite;flex-shrink:0;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.msg-row{display:flex;gap:7px;align-items:flex-end;margin-bottom:8px;}
+.msg-row.r{flex-direction:row-reverse;}
+.av{width:24px;height:24px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:.62rem;font-weight:700;}
+.av-a{background:var(--navy);color:#fff;}
+.av-u{background:#eef1f8;color:var(--txt2);}
+.bbl{max-width:80%;padding:7px 10px;font-size:.78rem;line-height:1.44;}
+.bbl-a{background:var(--navy);color:#fff;border-radius:4px 12px 12px 12px;}
+.bbl-u{background:#f0f2f8;color:var(--txt2);border-radius:12px 4px 12px 12px;}
+.chat-foot{margin-top:10px;padding-top:10px;border-top:1px solid var(--border);font-size:.65rem;color:var(--txt3);display:flex;flex-wrap:wrap;align-items:center;gap:4px;}
 
-    <style>
-      .logo-zoom-footer {
-        transform: scale(1.6);
-        transform-origin: center;
-        will-change: transform;
-        display: block;
-      }
+/* ── PAIN ── */
+.pain{background:var(--navy);padding:48px 16px;}
+.pain .eyebrow{color:rgba(255,255,255,.38);}
+.pain .sec-title{color:#fff;margin-bottom:28px;}
+.pain-grid{display:grid;grid-template-columns:1fr;gap:10px;}
+.pain-card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:var(--r);padding:16px;display:flex;gap:12px;align-items:flex-start;}
+.pain-emoji{font-size:1.6rem;line-height:1;flex-shrink:0;}
+.pain-card h3{font-size:.9rem;color:#fff;font-weight:700;margin-bottom:4px;}
+.pain-card p{font-size:.8rem;color:rgba(255,255,255,.52);line-height:1.58;}
 
-      .logo-zoom {
-        transform: scale(1.5);
-        transform-origin: center;
+/* ── VIDEO ── */
+.video-sec{background:var(--navy);padding:0 16px 48px;}
+.video-inner{max-width:720px;margin:0 auto;}
+.video-sec .eyebrow{color:rgba(255,255,255,.35);padding-top:8px;display:block;}
+.video-sec .sec-title{color:#fff;margin-bottom:6px;}
+.video-sub{text-align:center;color:rgba(255,255,255,.45);font-size:.82rem;margin-bottom:20px;}
+.video-frame{border-radius:14px;overflow:hidden;position:relative;aspect-ratio:9/16;max-width:340px;margin:0 auto;box-shadow:0 16px 48px rgba(0,0,0,.3);}
+.video-placeholder{position:absolute;inset:0;background:linear-gradient(135deg,#152d75 0%,#0e1f56 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;}
+.video-placeholder::before{content:'';position:absolute;inset:0;opacity:.04;background-image:linear-gradient(rgba(255,255,255,.5) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.5) 1px,transparent 1px);background-size:36px 36px;}
+.play-btn{width:54px;height:54px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;box-shadow:0 8px 28px rgba(240,165,0,.5);position:relative;z-index:1;}
+.play-btn i{color:#fff;font-size:1.1rem;margin-left:3px;}
+.video-label{text-align:center;position:relative;z-index:1;padding:0 16px;}
+.video-label strong{display:block;color:#fff;font-size:.88rem;font-weight:800;margin-bottom:4px;}
+.video-label span{color:rgba(255,255,255,.42);font-size:.74rem;}
 
-        will-change: transform;
-        display: block;
-      }
+/* ── SCENARIOS ── */
+.scenarios{padding:48px 16px;background:var(--bg);}
+.scenario-grid{display:grid;grid-template-columns:1fr;gap:10px;}
+.scenario-card{background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:14px 16px;display:flex;gap:12px;align-items:flex-start;}
+.scenario-ico{width:38px;height:38px;flex-shrink:0;border-radius:10px;background:var(--navy-bg);border:1px solid rgba(27,58,143,.11);display:flex;align-items:center;justify-content:center;color:var(--navy);font-size:.95rem;}
+.scenario-card h3{font-size:.9rem;font-weight:700;color:var(--navy);margin-bottom:4px;}
+.scenario-card p{font-size:.79rem;color:var(--txt2);line-height:1.58;}
 
-      .logo-glow {
-        position: relative;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        overflow: visible;
-      }
-      .logo-glow::before {
-        content: "";
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 20px;
-        height: 20px;
-        background: rgba(0, 210, 255, 0.5);
-        filter: blur(20px);
-        border-radius: 50%;
-        z-index: 0;
-        pointer-events: none;
-      }
+/* ── LAUNCH ── */
+.launch{padding:48px 16px;background:var(--bg2);}
+.steps-grid{display:grid;grid-template-columns:1fr;gap:10px;}
+.launch-step{background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:14px 16px;display:flex;gap:14px;align-items:flex-start;}
+.step-day{min-width:46px;height:46px;border-radius:11px;background:var(--navy);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0;}
+.step-day .d-num{font-size:1rem;font-weight:900;line-height:1;}
+.step-day .d-lbl{font-size:.5rem;font-weight:700;opacity:.6;letter-spacing:.08em;text-transform:uppercase;}
+.launch-step h3{font-size:.9rem;font-weight:700;color:var(--navy);margin-bottom:4px;}
+.launch-step p{font-size:.8rem;color:var(--txt2);line-height:1.58;}
 
-      .logo-filter {
-        filter: drop-shadow(0 0 8px rgba(0, 210, 255, 0.4));
-      }
+/* ── CASE ── */
+.case-sec{padding:48px 16px;background:var(--bg);}
+.case-card{background:var(--white);border:1px solid var(--border);border-radius:18px;padding:20px 16px;box-shadow:0 8px 28px rgba(27,58,143,.06);}
+.case-label{display:inline-block;margin-bottom:12px;background:var(--navy-bg);border:1px solid rgba(27,58,143,.13);color:var(--navy);font-size:.6rem;font-weight:800;letter-spacing:.13em;text-transform:uppercase;padding:3px 10px;border-radius:6px;}
+.case-card h3{font-size:.98rem;font-weight:800;color:var(--navy);margin-bottom:9px;line-height:1.35;}
+.case-card>p{font-size:.82rem;color:var(--txt2);line-height:1.68;margin-bottom:18px;}
+.calc-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px;}
+.calc-box{background:var(--bg);border-radius:11px;padding:12px;text-align:center;}
+.calc-n{font-size:1.4rem;font-weight:900;color:var(--gold);letter-spacing:-.02em;}
+.calc-l{font-size:.66rem;color:var(--txt3);margin-top:2px;line-height:1.4;}
+.calc-divider{display:flex;align-items:center;gap:10px;color:var(--txt3);font-size:.74rem;margin-bottom:16px;}
+.calc-divider::before,.calc-divider::after{content:'';flex:1;height:1px;background:var(--border);}
+.demo-link{display:inline-flex;align-items:center;gap:6px;color:var(--navy);font-weight:700;font-size:.85rem;padding:8px 0;}
 
-      * {
-        font-family: "Inter", sans-serif;
-      }
+/* ── PRICING ── */
+.pricing{padding:48px 16px;background:var(--bg2);}
+.pricing-grid{display:grid;grid-template-columns:1fr;gap:12px;margin-bottom:16px;}
+.price-card{background:var(--white);border:2px solid var(--border);border-radius:18px;padding:20px 16px;}
+.price-card.featured{background:var(--navy);border-color:var(--navy);position:relative;overflow:hidden;}
+.price-card.featured::before{content:'';position:absolute;top:-36px;right:-36px;width:120px;height:120px;background:radial-gradient(circle,rgba(240,165,0,.22),transparent 70%);border-radius:50%;pointer-events:none;}
+.price-best-badge{position:absolute;top:14px;right:14px;background:var(--gold);color:#fff;font-size:.58rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:3px 9px;border-radius:999px;z-index:1;}
+.price-tag{font-size:.65rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;margin-bottom:8px;display:block;}
+.price-tag.light{color:var(--txt3);}
+.price-tag.dark{color:rgba(255,255,255,.38);}
+.price-num{font-size:1.9rem;font-weight:900;letter-spacing:-.03em;margin-bottom:4px;}
+.price-num.light{color:var(--navy);}
+.price-num.dark{color:#fff;}
+.price-note{font-size:.76rem;margin-bottom:18px;}
+.price-note.light{color:var(--txt3);}
+.price-note.dark{color:rgba(255,255,255,.36);}
+.price-list{list-style:none;display:flex;flex-direction:column;gap:8px;margin-bottom:20px;}
+.price-list li{display:flex;align-items:flex-start;gap:8px;font-size:.82rem;}
+.chk{font-weight:700;flex-shrink:0;margin-top:1px;}
+.chk.green{color:var(--green);}
+.chk.gold{color:var(--gold);}
+.txt.light{color:var(--txt2);}
+.txt.dark{color:rgba(255,255,255,.8);}
+.price-cta-ghost{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;border:2px solid rgba(255,255,255,.2);color:#fff;font-weight:700;font-size:.88rem;padding:13px;border-radius:11px;transition:background .2s;position:relative;z-index:1;background:transparent;}
+.price-fn{text-align:center;font-size:.74rem;color:var(--txt3);margin-top:12px;}
 
-      h1,
-      h2,
-      h3,
-      h4,
-      h5,
-      h6,
-      .font-heading {
-        font-family: "Space Grotesk", sans-serif;
-      }
+/* Спецпредложение */
+.promo-box{background:linear-gradient(135deg,#fffbf0,#fff8e6);border:2px solid rgba(240,165,0,.32);border-radius:16px;padding:18px 16px;display:flex;flex-direction:column;gap:12px;}
+.promo-ico{width:38px;height:38px;flex-shrink:0;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;color:#fff;font-size:.9rem;}
+.promo-box h3{font-size:.92rem;font-weight:800;color:var(--navy);margin-bottom:4px;}
+.promo-box p{font-size:.8rem;color:var(--txt2);line-height:1.62;}
 
-      body {
-        background-color: #0f172a;
-      }
+/* ── ABOUT ── */
+.about{padding:48px 16px;background:var(--bg);}
+.about-card{background:var(--white);border:1px solid var(--border);border-radius:18px;padding:20px 16px;box-shadow:0 8px 28px rgba(27,58,143,.06);}
+.about-top{display:flex;flex-direction:column;align-items:center;gap:14px;margin-bottom:16px;}
+.about-photo{width:76px;height:76px;border-radius:50%;background:var(--navy-bg);border:3px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--navy);font-size:1.8rem;font-weight:900;overflow:hidden;flex-shrink:0;}
+.about-photo img{width:100%;height:100%;object-fit:cover;}
+.about-meta{text-align:center;}
+.about-name{font-size:1.05rem;font-weight:800;color:var(--navy);margin-bottom:4px;}
+.about-tag{font-size:.62rem;font-weight:800;background:var(--navy-bg);color:var(--navy);padding:3px 9px;border-radius:999px;letter-spacing:.08em;text-transform:uppercase;}
+.about-quote{font-size:.86rem;color:var(--txt);line-height:1.72;border-left:3px solid var(--gold);padding-left:12px;margin-bottom:14px;font-style:italic;}
+.about-body p{font-size:.83rem;color:var(--txt2);line-height:1.7;margin-bottom:10px;}
+.about-stack{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:16px;padding-top:14px;border-top:1px solid var(--border);}
+.about-stack-label{width:100%;font-size:.68rem;color:var(--txt3);font-weight:600;margin-bottom:4px;}
+.about-stack span{display:inline-flex;align-items:center;gap:4px;font-size:.7rem;font-weight:600;background:var(--bg);border:1px solid var(--border);color:var(--txt2);padding:3px 8px;border-radius:6px;}
+.about-cta{display:flex;align-items:center;justify-content:center;gap:7px;color:var(--navy);font-weight:700;font-size:.86rem;padding:11px 16px;border-radius:10px;border:2px solid var(--navy);transition:background .2s,color .2s;}
+.about-cta:active{background:var(--navy);color:#fff;}
 
-      @keyframes fadeInUp {
-        from {
-          opacity: 0;
-          transform: translateY(30px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
+/* ── FAQ ── */
+.faq{padding:48px 16px;background:var(--bg2);}
+.faq-list{display:flex;flex-direction:column;gap:8px;}
+.faq-item{background:var(--white);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;}
+.faq-q{width:100%;background:none;border:none;cursor:pointer;padding:14px 15px;text-align:left;display:flex;align-items:center;justify-content:space-between;gap:10px;font-family:'Manrope',sans-serif;font-weight:600;font-size:.85rem;color:var(--navy);line-height:1.4;}
+.faq-q .arr{color:var(--gold);transition:transform .25s;flex-shrink:0;font-size:.8rem;}
+.faq-q[aria-expanded="true"] .arr{transform:rotate(180deg);}
+.faq-a{display:none;padding:0 15px 14px;font-size:.82rem;color:var(--txt2);line-height:1.68;}
+.faq-a.open{display:block;}
 
-      .animate-fade-in-up {
-        animation: fadeInUp 1s ease-out forwards;
-      }
+/* ── FINAL CTA ── */
+.final-cta{padding:48px 16px 56px;background:var(--bg);}
+.final-box{background:var(--white);border:2px solid rgba(240,165,0,.22);border-radius:20px;padding:28px 16px;text-align:center;box-shadow:0 12px 44px rgba(240,165,0,.08);position:relative;overflow:hidden;}
+.final-box::before{content:'';position:absolute;top:-50px;right:-50px;width:180px;height:180px;background:radial-gradient(circle,rgba(240,165,0,.13),transparent 70%);border-radius:50%;pointer-events:none;}
+.spots-pill{display:inline-flex;align-items:center;gap:5px;background:rgba(240,165,0,.1);border:1px solid rgba(240,165,0,.26);color:var(--gold-h);font-size:.6rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;padding:4px 11px;border-radius:999px;margin-bottom:16px;position:relative;z-index:1;}
+.final-box h2{font-size:1.35rem;color:var(--navy);margin-bottom:10px;position:relative;z-index:1;}
+.final-box p{font-size:.84rem;color:var(--txt2);line-height:1.65;margin-bottom:20px;position:relative;z-index:1;}
+.final-box .btn-gold{font-size:.95rem;padding:15px 20px;position:relative;z-index:1;}
 
-      .animate-delay-100 {
-        animation-delay: 0.1s;
-        opacity: 0;
-      }
+/* ── FOOTER ── */
+footer{background:var(--navy);padding:24px 16px;padding-bottom:calc(24px + env(safe-area-inset-bottom));}
+.foot-in{display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center;}
+.foot-brand{display:flex;align-items:center;gap:8px;}
+.foot-brand img{height:26px;}
+.foot-brand span{font-weight:800;font-size:.82rem;color:rgba(255,255,255,.6);}
+.foot-socials{display:flex;gap:18px;}
+.foot-socials a{color:rgba(255,255,255,.32);font-size:1.2rem;transition:color .2s;}
+.foot-socials a:active{color:var(--gold);}
+.foot-copy{color:rgba(255,255,255,.22);font-size:.68rem;}
 
-      .animate-delay-200 {
-        animation-delay: 0.2s;
-        opacity: 0;
-      }
+/* ── FLOAT ── */
+.float-widget{position:fixed;bottom:14px;right:10px;z-index:89;background:var(--white);border:1px solid var(--border);border-radius:14px;padding:12px 14px;box-shadow:0 8px 28px rgba(27,58,143,.14);max-width:220px;display:none;}
+.float-widget p{font-size:.75rem;color:var(--txt2);line-height:1.5;margin-bottom:9px;}
+.float-widget p strong{color:var(--navy);display:block;margin-bottom:1px;}
+.float-link{display:inline-flex;align-items:center;gap:5px;background:var(--navy);color:#fff;font-size:.74rem;font-weight:700;padding:7px 12px;border-radius:8px;}
+.float-close{position:absolute;top:7px;right:9px;background:none;border:none;cursor:pointer;color:var(--txt3);font-size:.78rem;}
 
-      .animate-delay-300 {
-        animation-delay: 0.3s;
-        opacity: 0;
-      }
+/* ── CALCULATOR ── */
+.calc-inputs{display:flex;flex-direction:column;gap:16px;margin-bottom:20px;}
+.calc-input-row label{display:block;font-size:.82rem;font-weight:600;color:var(--txt);margin-bottom:8px;}
+.calc-input-wrap{display:flex;align-items:center;gap:12px;}
+.calc-input-wrap input[type=range]{flex:1;height:4px;accent-color:var(--gold);cursor:pointer;}
+.calc-val{font-size:.9rem;font-weight:800;color:var(--navy);min-width:36px;text-align:right;}
+.calc-result{display:flex;align-items:center;justify-content:center;gap:12px;background:var(--navy-bg);border-radius:14px;padding:18px 14px;margin-bottom:16px;flex-wrap:wrap;}
+.calc-result-loss,.calc-result-gain{text-align:center;flex:1;min-width:90px;}
+.calc-result-num{font-size:1.8rem;font-weight:900;letter-spacing:-.02em;color:var(--navy);}
+.calc-result-num.green{color:var(--green);}
+.calc-result-label{font-size:.72rem;color:var(--txt3);margin-top:2px;}
+.calc-result-arrow{font-size:1.3rem;color:var(--gold);font-weight:900;}
 
-      .animate-delay-400 {
-        animation-delay: 0.4s;
-        opacity: 0;
-      }
+/* ── INTEGRATIONS ── */
+.integrations{padding:48px 16px;background:var(--bg2);}
+.integrations .sec-title{margin-bottom:6px;}
+.integrations .sec-sub{margin-bottom:24px;}
+.integ-grid{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;}
+.integ-card{
+  display:flex;align-items:center;gap:10px;
+  background:var(--white);border:1px solid var(--border);
+  border-radius:14px;padding:12px 18px;
+  box-shadow:0 3px 12px rgba(27,58,143,.05);
+  font-size:.85rem;font-weight:700;color:var(--txt);
+  transition:transform .15s,box-shadow .15s;
+}
+.integ-card:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(27,58,143,.1);}
+.integ-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1.1rem;}
 
-      .glass-card {
-        background: rgba(15, 23, 42, 0.6);
-        border: 1px solid rgba(0, 210, 255, 0.1);
-      }
+/* ── SCREENSHOTS ── */
+.screenshots-block{display:flex;flex-direction:column;gap:12px;}
+.screenshots-label{display:flex;align-items:center;gap:7px;font-size:.72rem;color:var(--txt3);font-weight:600;padding:0 2px;}
+.screenshots-row{display:grid;grid-template-columns:1fr;gap:10px;}
+.screenshot-item{border-radius:16px;overflow:hidden;box-shadow:0 12px 40px rgba(27,58,143,.13);border:1px solid var(--border);background:var(--white);}
+.screenshot-item img{width:100%;height:auto;display:block;}
+.screenshot-caption{padding:8px 12px;font-size:.72rem;color:var(--txt3);font-weight:600;text-align:center;border-top:1px solid var(--border);}
 
-      .glow-cyan {
-        box-shadow: 0 0 40px rgba(0, 210, 255, 0.25);
-      }
+/* ── MINI CHAT ── */
+.mini-chat{margin-top:8px;display:flex;flex-direction:column;gap:5px;}
+.mc-u{font-size:.76rem;color:var(--txt3);background:#f4f5f8;border-radius:10px 10px 10px 3px;padding:6px 10px;align-self:flex-start;max-width:95%;}
+.mc-b{font-size:.76rem;color:#fff;background:var(--navy);border-radius:10px 10px 3px 10px;padding:6px 10px;align-self:flex-end;max-width:95%;}
 
-      .inner-glow {
-        box-shadow: inset 0 0 60px rgba(0, 210, 255, 0.05);
-      }
+/* ── COMPARISON TABLE ── */
+.compare-sec{padding:48px 16px;background:var(--bg2);}
+.compare-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+.compare-table{width:100%;min-width:520px;border-collapse:collapse;font-size:.8rem;}
+.compare-table th{padding:10px 12px;text-align:center;font-weight:800;font-size:.72rem;letter-spacing:.04em;}
+.compare-table th:first-child{text-align:left;}
+.compare-table th.col-bot{background:var(--navy);color:#fff;border-radius:10px 10px 0 0;}
+.compare-table th.col-admin{background:var(--bg);color:var(--txt2);}
+.compare-table th.col-basic{background:var(--bg);color:var(--txt2);}
+.compare-table td{padding:10px 12px;text-align:center;border-bottom:1px solid var(--border);color:var(--txt2);}
+.compare-table td:first-child{text-align:left;font-weight:600;color:var(--txt);}
+.compare-table td.col-bot{background:rgba(27,58,143,.04);color:var(--navy);font-weight:700;}
+.compare-table tr:last-child td{border-bottom:none;}
+.compare-table .yes{color:var(--green);font-size:1rem;}
+.compare-table .no{color:#ef4444;font-size:1rem;}
+.compare-table .part{color:var(--gold);}
 
-      .arrow-connector {
-        position: relative;
-      }
+/* ── GUARANTEE ── */
+.guarantee-sec{padding:0 16px 48px;background:var(--bg2);}
+.guarantee-box{background:var(--navy);border-radius:18px;padding:22px 18px;display:flex;gap:14px;align-items:flex-start;}
+.guarantee-ico{width:40px;height:40px;flex-shrink:0;border-radius:50%;background:rgba(240,165,0,.18);border:1px solid rgba(240,165,0,.3);display:flex;align-items:center;justify-content:center;color:var(--gold);font-size:1.1rem;}
+.guarantee-box h3{font-size:.95rem;font-weight:800;color:#fff;margin-bottom:5px;}
+.guarantee-box p{font-size:.81rem;color:rgba(255,255,255,.55);line-height:1.62;}
+.guarantee-box strong{color:#fff;}
 
-      .arrow-connector::after {
-        content: "";
-        position: absolute;
-        background: linear-gradient(90deg, transparent, #00d2ff, transparent);
-        opacity: 0.3;
-      }
+/* ── SCARCITY BANNER ── */
+.scarcity-bar{
+  position:fixed;top:56px;left:0;right:0;z-index:99;
+  background:var(--gold-h);color:#fff;
+  padding:8px 16px;
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+  font-size:.74rem;font-weight:700;
+  box-shadow:0 2px 12px rgba(240,165,0,.35);
+  transform:translateY(-100%);transition:transform .4s ease;
+}
+.scarcity-bar.visible{transform:translateY(0);}
+.scarcity-bar a{color:#fff;text-decoration:underline;white-space:nowrap;}
+.scarcity-bar span{opacity:.75;cursor:pointer;font-size:.85rem;}
+.scarcity-pulse{width:7px;height:7px;border-radius:50%;background:#fff;animation:pulse 1.8s infinite;flex-shrink:0;}
 
-      @media (min-width: 768px) {
-        .arrow-connector::after {
-          right: -2rem;
-          top: 50%;
-          transform: translateY(-50%);
-          width: 2rem;
-          height: 2px;
-        }
-      }
+/* ── ANIMATIONS ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.fu{opacity:0;animation:fadeUp .65s ease forwards;}
+.d1{animation-delay:.05s}.d2{animation-delay:.14s}.d3{animation-delay:.23s}.d4{animation-delay:.32s}
 
-      @media (max-width: 767px) {
-        .arrow-connector::after {
-          bottom: -1.5rem;
-          left: 50%;
-          transform: translateX(-50%);
-          width: 2px;
-          height: 1.5rem;
-        }
-      }
+/* ══════════════════════════════
+   TABLET 600px+
+══════════════════════════════ */
+@media(min-width:600px){
+  .wrap{padding:0 20px;}
+  .nav-in{padding:12px 20px;}
+  .hero{padding:92px 20px 52px;}
+  .sec-title{font-size:1.85rem;}
+  .hero h1{font-size:2.5rem;}
+  .hero-btns{flex-direction:row;flex-wrap:wrap;}
+  .btn-gold,.btn-outline{width:auto;}
+  .pain-grid{grid-template-columns:1fr 1fr;}
+  .scenario-grid{grid-template-columns:1fr 1fr;}
+  .pricing-grid{grid-template-columns:1fr 1fr;}
+  .calc-grid{grid-template-columns:repeat(4,1fr);}
+  .screenshots-row{grid-template-columns:auto 1fr;align-items:start;}
+  .screenshot-item:first-child{max-width:220px;}
+  .promo-box{flex-direction:row;align-items:flex-start;}
+  .about-top{flex-direction:row;align-items:flex-start;}
+  .about-meta{text-align:left;}
+  .about-cta{width:auto;}
+  .about-stack{justify-content:flex-start;}
+}
 
-      .pulse-dot {
-        animation: pulse 2s infinite;
-      }
+/* ══════════════════════════════
+   DESKTOP 900px+
+══════════════════════════════ */
+@media(min-width:900px){
+  .hero{padding:100px 20px 64px;min-height:100svh;display:flex;align-items:center;}
+  .hero-inner{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:60px;}
+  .hero h1{font-size:3.4rem;}
+  .sec-title{font-size:2.2rem;}
+  .chat-wrap{margin-top:0;}
+  .pain-grid{grid-template-columns:repeat(3,1fr);}
+  .scenario-grid{grid-template-columns:1fr 1fr;}
+  .steps-grid{grid-template-columns:repeat(3,1fr);}
+  .float-widget{bottom:28px;right:18px;max-width:240px;}
+}
+</style>
+</head>
+<body>
 
-      @keyframes pulse {
-        0%,
-        100% {
-          opacity: 1;
-        }
-        50% {
-          opacity: 0.5;
-        }
-      }
+<!-- NAV -->
+<nav>
+  <div class="nav-in">
+    <a href="/" class="brand">
+      <img src="images/logo.png" alt="GhostLogic AI"/>
+      <span class="brand-name">Ghost<span>Logic</span></span>
+    </a>
+    <a href="https://t.me/firdavs_0017" class="nav-btn" target="_blank">
+      <i class="fa-brands fa-telegram"></i> Написать Фирдавсу
+    </a>
+  </div>
+</nav>
 
-      .floating-btn {
-        animation: float 3s ease-in-out infinite;
-      }
 
-      @keyframes float {
-        0%,
-        100% {
-          transform: translateY(0);
-        }
-        50% {
-          transform: translateY(-8px);
-        }
-      }
-    </style>
-  </head>
-  <body class="min-h-screen text-slate-300 antialiased overflow-x-hidden">
-    <!-- Sticky Navbar -->
-    <nav
-      class="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl bg-[#0B1120]/80 border-b border-white/5"
-    >
-      <div
-        class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between"
-      >
-        <div class="flex items-center gap-3">
-          <div class="logo-glow flex items-center">
-            <img
-              src="favicon.png"
-              alt="GhostLogic AI"
-              class="h-10 w-auto relative z-10 logo-filter logo-zoom"
-            />
-          </div>
-          <div class="font-heading font-bold text-xl tracking-tight">
-            <span class="text-slate-300">Ghost</span
-            ><span class="text-[#00d2ff]">Logic</span>
-          </div>
-        </div>
+<!-- SCARCITY BANNER -->
+<div class="scarcity-bar" id="scarcityBar">
+  <div class="scarcity-pulse"></div>
+  <span>🔥 Спеццена $240 вместо $300 — осталось <strong>3 места</strong> для бьюти-проектов</span>
+  <a href="https://t.me/firdavs_0017" target="_blank">Забронировать →</a>
+  <span id="scarcityClose" onclick="document.getElementById('scarcityBar').remove()">✕</span>
+</div>
 
-        <div
-          class="flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/10 bg-white/5"
-        >
-          <span class="w-2 h-2 rounded-full bg-emerald-400 pulse-dot"></span>
-          <span class="text-xs text-slate-400 font-medium tracking-wide"
-            >OPERATIONAL</span
-          >
-        </div>
+
+<!-- 1. HERO -->
+<section class="hero" id="top">
+  <div class="hero-inner">
+    <div>
+      <div class="hero-label fu d1">
+        <i class="fa-solid fa-circle-dot" style="font-size:.42rem;"></i>
+        ИИ-автоматизация для бьюти
       </div>
-    </nav>
-
-    <!-- Hero Section -->
-    <section class="min-h-screen flex items-center justify-center px-6 pt-20">
-      <div class="max-w-4xl mx-auto text-center">
-        <h1
-          class="font-heading text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight tracking-tight animate-fade-in-up"
-        >
-          I don't just build websites.
-          <span class="block text-[#00d2ff]">I build Digital Employees.</span>
-        </h1>
-        <p
-          class="text-slate-400 text-lg sm:text-xl mt-8 max-w-2xl mx-auto leading-relaxed animate-fade-in-up animate-delay-200"
-        >
-          Stop losing leads to static forms. My systems engage, qualify, and
-          close customers 24/7.
-        </p>
-        <div class="mt-10 animate-fade-in-up animate-delay-300">
-          <a
-            href="https://t.me/GhostLogicAi_bot"
-            class="inline-flex items-center gap-3 bg-[#00d2ff] text-black font-bold px-8 py-4 rounded-xl hover:bg-[#9fe0f0] transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-[#00d2ff]/20"
-          >
-            <i class="fa-solid fa-rocket"></i>
-            Deploy Your Agent
-          </a>
-        </div>
-        <div class="mt-16 animate-fade-in-up animate-delay-400">
-          <i
-            class="fa-solid fa-chevron-down text-slate-600 text-2xl animate-bounce"
-          ></i>
-        </div>
-      </div>
-    </section>
-
-    <!-- Architecture Visual -->
-    <section class="py-24 px-6">
-      <div class="max-w-6xl mx-auto">
-        <h2
-          class="font-heading text-2xl sm:text-3xl font-bold text-center mb-4"
-        >
-          The Architecture
-        </h2>
-        <p class="text-slate-400 text-center mb-16 max-w-xl mx-auto">
-          How your digital employee processes every interaction
-        </p>
-
-        <div
-          class="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-4"
-        >
-          <!-- Card 1: Traffic -->
-          <div
-            class="glass-card rounded-2xl p-8 w-full md:w-72 text-center arrow-connector"
-          >
-            <div
-              class="w-16 h-16 mx-auto mb-6 rounded-xl bg-[#00d2ff]/10 flex items-center justify-center"
-            >
-              <i class="fa-solid fa-users text-[#00d2ff] text-2xl"></i>
-            </div>
-            <h3 class="font-heading font-semibold text-lg mb-2">Traffic</h3>
-            <p class="text-slate-400 text-sm">
-              Visitors arrive from ads, SEO, or social media
-            </p>
-          </div>
-
-          <!-- Arrow for mobile -->
-          <div class="md:hidden text-[#00d2ff]/50">
-            <i class="fa-solid fa-arrow-down text-xl"></i>
-          </div>
-
-          <!-- Arrow for desktop -->
-          <div class="hidden md:block text-[#00d2ff]/50">
-            <i class="fa-solid fa-arrow-right text-xl"></i>
-          </div>
-
-          <!-- Card 2: AI Logic -->
-          <div
-            class="glass-card rounded-2xl p-8 w-full md:w-72 text-center glow-cyan arrow-connector"
-          >
-            <div
-              class="w-16 h-16 mx-auto mb-6 rounded-xl bg-[#00d2ff]/10 flex items-center justify-center"
-            >
-              <i class="fa-solid fa-brain text-[#00d2ff] text-2xl"></i>
-            </div>
-            <h3 class="font-heading font-semibold text-lg mb-2">AI Logic</h3>
-            <p class="text-slate-400 text-sm">
-              Intelligent engagement, qualification & responses
-            </p>
-          </div>
-
-          <!-- Arrow for mobile -->
-          <div class="md:hidden text-[#00d2ff]/50">
-            <i class="fa-solid fa-arrow-down text-xl"></i>
-          </div>
-
-          <!-- Arrow for desktop -->
-          <div class="hidden md:block text-[#00d2ff]/50">
-            <i class="fa-solid fa-arrow-right text-xl"></i>
-          </div>
-
-          <!-- Card 3: CRM -->
-          <div class="glass-card rounded-2xl p-8 w-full md:w-72 text-center">
-            <div
-              class="w-16 h-16 mx-auto mb-6 rounded-xl bg-[#00d2ff]/10 flex items-center justify-center"
-            >
-              <i class="fa-solid fa-dollar-sign text-[#00d2ff] text-2xl"></i>
-            </div>
-            <h3 class="font-heading font-semibold text-lg mb-2">CRM</h3>
-            <p class="text-slate-400 text-sm">
-              Qualified leads flow directly into your sales pipeline
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Demo Showcase -->
-    <section class="py-24 px-6">
-      <div class="max-w-4xl mx-auto">
-        <div
-          class="glass-card rounded-3xl p-10 sm:p-14 inner-glow relative overflow-hidden"
-        >
-          <!-- Decorative elements -->
-          <div
-            class="absolute top-0 right-0 w-64 h-64 bg-[#00d2ff]/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"
-          ></div>
-
-          <div class="relative z-10">
-            <div
-              class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#00d2ff]/10 border border-[#00d2ff]/20 mb-8"
-            >
-              <i class="fa-solid fa-building text-[#00d2ff] text-sm"></i>
-              <span class="text-xs font-semibold tracking-widest text-[#00d2ff]"
-                >CASE STUDY: REAL ESTATE</span
-              >
-            </div>
-
-            <h2
-              class="font-heading text-2xl sm:text-3xl lg:text-4xl font-bold mb-6 leading-tight"
-            >
-              I built a system that sells apartments in Dubai automatically.
-            </h2>
-
-            <p class="text-slate-400 text-lg mb-10 max-w-2xl">
-              Experience how AI qualifies leads, answers complex questions about
-              properties, and books viewings—all without human intervention.
-            </p>
-
-            <a
-              href="https://fpulotov.github.io/PrimeKey/"
-              target="_blank"
-              class="inline-flex items-center gap-3 border-2 border-[#00d2ff] text-[#00d2ff] font-bold px-8 py-4 rounded-xl hover:bg-[#00d2ff] hover:text-black transition-all duration-300 group"
-            >
-              <i class="fa-solid fa-play group-hover:animate-pulse"></i>
-              Launch Live Demo
-            </a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Features Grid (Bento Style) -->
-    <section class="py-24 px-6">
-      <div class="max-w-5xl mx-auto">
-        <h2
-          class="font-heading text-2xl sm:text-3xl font-bold text-center mb-4"
-        >
-          Why It Works
-        </h2>
-        <p class="text-slate-400 text-center mb-16 max-w-xl mx-auto">
-          Built for reliability, speed, and seamless integration
-        </p>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <!-- Box 1 -->
-          <div
-            class="glass-card rounded-2xl p-8 hover:border-[#00d2ff]/20 transition-all duration-300 group"
-          >
-            <div
-              class="w-14 h-14 mb-6 rounded-xl bg-[#00d2ff]/10 flex items-center justify-center group-hover:scale-110 transition-transform duration-300"
-            >
-              <i class="fa-solid fa-shield-halved text-[#00d2ff] text-xl"></i>
-            </div>
-            <h3 class="font-heading font-semibold text-xl mb-3">
-              No Human Error
-            </h3>
-            <p class="text-slate-400 text-sm leading-relaxed">
-              Consistent, accurate responses every single time. Your AI never
-              gets tired, distracted, or makes mistakes.
-            </p>
-          </div>
-
-          <!-- Box 2 -->
-          <div
-            class="glass-card rounded-2xl p-8 hover:border-[#00d2ff]/20 transition-all duration-300 group"
-          >
-            <div
-              class="w-14 h-14 mb-6 rounded-xl bg-[#00d2ff]/10 flex items-center justify-center group-hover:scale-110 transition-transform duration-300"
-            >
-              <i class="fa-solid fa-bolt text-[#00d2ff] text-xl"></i>
-            </div>
-            <h3 class="font-heading font-semibold text-xl mb-3">
-              Instant Response
-            </h3>
-            <p class="text-slate-400 text-sm leading-relaxed">
-              <span class="text-[#00d2ff] font-semibold">&lt;2 seconds</span>
-              average reply time. Capture leads while they're still engaged and
-              interested.
-            </p>
-          </div>
-
-          <!-- Box 3 -->
-          <div
-            class="glass-card rounded-2xl p-8 hover:border-[#00d2ff]/20 transition-all duration-300 group"
-          >
-            <div
-              class="w-14 h-14 mb-6 rounded-xl bg-[#00d2ff]/10 flex items-center justify-center group-hover:scale-110 transition-transform duration-300"
-            >
-              <i class="fa-solid fa-table text-[#00d2ff] text-xl"></i>
-            </div>
-            <h3 class="font-heading font-semibold text-xl mb-3">
-              Google Sheets Sync
-            </h3>
-            <p class="text-slate-400 text-sm leading-relaxed">
-              Every lead, every conversation, every data point—automatically
-              synced to your spreadsheet in real-time.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Stats Section -->
-    <section class="py-24 px-6">
-      <div class="max-w-4xl mx-auto">
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-          <div>
-            <div
-              class="font-heading text-4xl sm:text-5xl font-bold text-[#00d2ff] mb-2"
-            >
-              24/7
-            </div>
-            <div class="text-slate-400 text-sm">Always Online</div>
-          </div>
-          <div>
-            <div
-              class="font-heading text-4xl sm:text-5xl font-bold text-[#00d2ff] mb-2"
-            >
-              &lt;2s
-            </div>
-            <div class="text-slate-400 text-sm">Response Time</div>
-          </div>
-          <div>
-            <div
-              class="font-heading text-4xl sm:text-5xl font-bold text-[#00d2ff] mb-2"
-            >
-              99.9%
-            </div>
-            <div class="text-slate-400 text-sm">Uptime</div>
-          </div>
-          <div>
-            <div
-              class="font-heading text-4xl sm:text-5xl font-bold text-[#00d2ff] mb-2"
-            >
-              ∞
-            </div>
-            <div class="text-slate-400 text-sm">Conversations</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="py-24 px-6">
-      <div class="max-w-3xl mx-auto text-center">
-        <h2 class="font-heading text-3xl sm:text-4xl font-bold mb-6">
-          Ready to automate your sales?
-        </h2>
-        <p class="text-slate-400 text-lg mb-10">
-          Let's build your digital employee together.
-        </p>
-        <a
-          href="https://t.me/GhostLogicAi_bot"
-          class="inline-flex items-center gap-3 bg-[#00d2ff] text-black font-bold px-10 py-5 rounded-xl hover:bg-[#9fe0f0] transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-[#00d2ff]/20 text-lg"
-        >
-          <i class="fa-solid fa-message"></i>
-          Start a Conversation
+      <h1 class="fu d2">
+        Ваш салон теряет<br>до 30% записей,<br>пока администратор<br><em>занят или спит</em>
+      </h1>
+      <p class="hero-sub fu d3">
+        Внедрите ИИ-агента, который закроет запись за 25 секунд — 24/7. Без найма, без зарплаты, без «я сейчас не могу ответить».
+      </p>
+      <div class="hero-btns fu d4">
+        <a href="https://t.me/firdavs_0017" class="btn-gold" target="_blank">
+          <i class="fa-brands fa-telegram"></i> Забронировать спеццену
+        </a>
+        <a href="https://t.me/tg_consultant1_bot" class="btn-outline" target="_blank">
+          <i class="fa-brands fa-telegram"></i> Попробовать бота
         </a>
       </div>
-    </section>
+      <div class="hero-trust fu d4">
+        <span><i class="fa-solid fa-check-circle"></i> Запуск за 72 часа</span>
+        <span><i class="fa-solid fa-check-circle"></i> Работает 24/7</span>
+        <span><i class="fa-solid fa-check-circle"></i> Платите после результата</span>
+      </div>
+    </div>
 
-    <footer class="py-12 px-6 border-t border-white/5">
-      <div
-        class="max-w-7xl mx-auto flex flex-col items-center gap-8 text-center"
-      >
-        <div class="flex flex-col items-center gap-4">
-          <div class="logo-glow flex items-center justify-center">
-            <img
-              src="favicon.png"
-              alt="GhostLogic AI"
-              class="h-10 w-auto relative z-10 logo-filter logo-zoom-footer mx-auto"
-            />
+    <div class="chat-wrap fu d3">
+      <div class="screenshots-block">
+        <div class="screenshots-label">
+          <div class="dot-live"></div>
+          Реальная переписка · Запись сохранена в таблицу автоматически
+        </div>
+        <div class="screenshots-row">
+          <div class="screenshot-item">
+            <img src="images/chat.jpg" alt="Скриншот переписки с ботом" loading="lazy"/>
+            <div class="screenshot-caption">Клиент → бот за 25 сек</div>
           </div>
-          <span class="text-slate-500 text-sm tracking-wide"
-            >GhostLogic AI © 2026</span
-          >
-        </div>
-
-        <div class="flex items-center gap-8">
-          <a
-            href="https://t.me/GhostLogicAi_bot"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="text-slate-500 hover:text-[#00d2ff] transition-all duration-300 hover:drop-shadow-[0_0_10px_rgba(0,210,255,0.8)]"
-          >
-            <i class="fa-brands fa-telegram text-3xl"></i>
-          </a>
-
-          <a
-            href="https://www.instagram.com/ghostlogic_ai/"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="text-slate-500 hover:text-[#00d2ff] transition-all duration-300 hover:drop-shadow-[0_0_10px_rgba(0,210,255,0.8)]"
-          >
-            <i class="fa-brands fa-instagram text-3xl"></i>
-          </a>
-        </div>
-
-        <div
-          class="flex items-center gap-2 px-4 py-1.5 rounded-full border border-white/5 bg-white/5"
-        >
-          <span
-            class="w-1.5 h-1.5 rounded-full bg-emerald-500 pulse-dot"
-          ></span>
-          <span
-            class="text-[10px] text-slate-500 font-medium tracking-widest uppercase"
-            >System Active</span
-          >
+          <div class="screenshot-item">
+            <img src="images/table.png" alt="Запись в Google Таблице" loading="lazy"/>
+            <div class="screenshot-caption">Запись в Google Таблицах</div>
+          </div>
         </div>
       </div>
-    </footer>
-    
-    <!-- Background Grid Effect -->
-    <div
-      class="fixed inset-0 pointer-events-none z-0 opacity-[0.02]"
-      style="
-        background-image:
-          linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
-        background-size: 50px 50px;
-      "
-    ></div>
-  </body>
+    </div>
+  </div>
+</section>
+
+
+<!-- 2. БОЛИ -->
+<section class="pain">
+  <div class="wrap">
+    <span class="eyebrow">Почему это стоит вам денег</span>
+    <h2 class="sec-title">Узнаёте себя?</h2>
+    <div class="pain-grid">
+      <div class="pain-card">
+        <div class="pain-emoji">💸</div>
+        <div>
+          <h3>Клиент ушёл к конкуренту</h3>
+          <p>Написал в 22:00, хотел записаться. Вы увидели утром. Он уже нашёл другой салон, который ответил за минуту.</p>
+        </div>
+      </div>
+      <div class="pain-card">
+        <div class="pain-emoji">😴</div>
+        <div>
+          <h3>Администратор перегружен</h3>
+          <p>«Сколько стоит чистка?», «Есть окна в пятницу?» — одни и те же вопросы по 40 раз в день. Это потеря времени.</p>
+        </div>
+      </div>
+      <div class="pain-card">
+        <div class="pain-emoji">⏳</div>
+        <div>
+          <h3>Записи теряются</h3>
+          <p>Клиент договорился в личке, но в журнал не внесли. В итоге — накладка, недовольный клиент, потеря репутации.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- 3. ВИДЕО -->
+<section class="video-sec" id="video">
+  <div class="video-inner">
+    <span class="eyebrow">Убедитесь сами</span>
+    <h2 class="sec-title">Смотрите, как это работает</h2>
+    <p class="video-sub">Клиент пишет → бот записывает → данные в таблице. За 25 секунд.</p>
+    <div class="video-frame">
+      <!--
+        Вариант А (Loom):
+          <iframe src="https://www.loom.com/embed/ВАШ_ID" frameborder="0" allowfullscreen
+            style="position:absolute;inset:0;width:100%;height:100%;"></iframe>
+        Вариант Б (mp4):
+          <video src="images/demo.mp4" controls poster="images/demo-thumb.jpg"
+            style="width:100%;height:100%;object-fit:cover;"></video>
+      -->
+      <video
+        src="videos/demo.MP4"
+        poster="images/demo-thumb.jpg"
+        controls
+        playsinline
+        preload="none"
+        style="width:100%;height:100%;object-fit:cover;display:block;">
+      </video>
+    </div>
+  </div>
+</section>
+
+
+<!-- 4. ДЛЯ КОГО -->
+<section class="scenarios" id="scenarios">
+  <div class="wrap">
+    <span class="eyebrow">Сценарии использования</span>
+    <h2 class="sec-title">Что именно говорит бот</h2>
+    <p class="sec-sub">Реальные диалоги — бот отвечает так, как вы бы ответили сами.</p>
+    <div class="scenario-grid">
+
+      <div class="scenario-card">
+        <div class="scenario-ico"><i class="fa-solid fa-spa"></i></div>
+        <div style="flex:1;min-width:0;">
+          <h3>Косметология</h3>
+          <div class="mini-chat">
+            <div class="mc-u">💬 «Сколько стоит чистка лица?»</div>
+            <div class="mc-b">Механическая — 2 500₽, ультразвуковая — 3 200₽. Записать вас? 🌸</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="scenario-card">
+        <div class="scenario-ico"><i class="fa-solid fa-scissors"></i></div>
+        <div style="flex:1;min-width:0;">
+          <h3>Салон красоты</h3>
+          <div class="mini-chat">
+            <div class="mc-u">💬 «Есть мастер в субботу после 16:00?»</div>
+            <div class="mc-b">Да, Аня свободна в 17:00 и 18:30 — на какое время записать? ✂️</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="scenario-card">
+        <div class="scenario-ico"><i class="fa-solid fa-hand-sparkles"></i></div>
+        <div style="flex:1;min-width:0;">
+          <h3>Маникюр / Педикюр</h3>
+          <div class="mini-chat">
+            <div class="mc-u">💬 «Делаете гель-лак с дизайном?»</div>
+            <div class="mc-b">Да! Гель-лак от 1 200₽, дизайн от 300₽. Хотите записаться? 💅</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="scenario-card">
+        <div class="scenario-ico"><i class="fa-solid fa-star"></i></div>
+        <div style="flex:1;min-width:0;">
+          <h3>Лазерная эпиляция</h3>
+          <div class="mini-chat">
+            <div class="mc-u">💬 «Можно делать если загар?»</div>
+            <div class="mc-b">Нужно подождать 2–3 недели после загара. Напомнить вам записаться позже? 🌟</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- 5. ЗАПУСК -->
+<section class="launch" id="launch">
+  <div class="wrap">
+    <span class="eyebrow">Процесс за 72 часа</span>
+    <h2 class="sec-title">От созвона до живого бота — 3 дня</h2>
+    <p class="sec-sub">Никаких затяжных проектов. Чёткий процесс с понятным результатом.</p>
+    <div class="steps-grid">
+      <div class="launch-step">
+        <div class="step-day"><div class="d-num">01</div><div class="d-lbl">День</div></div>
+        <div>
+          <h3>Созвон и база знаний</h3>
+          <p>30 минут. Вы передаёте прайс, описания услуг и FAQ. Я задаю нужные вопросы о стиле общения с клиентами.</p>
+        </div>
+      </div>
+      <div class="launch-step">
+        <div class="step-day"><div class="d-num">02</div><div class="d-lbl">День</div></div>
+        <div>
+          <h3>Сборка и обучение</h3>
+          <p>Обучаю бота на вашей базе знаний, настраиваю логику записи и интеграцию с Google Таблицами.</p>
+        </div>
+      </div>
+      <div class="launch-step">
+        <div class="step-day"><div class="d-num">03</div><div class="d-lbl">День</div></div>
+        <div>
+          <h3>Тест и запуск</h3>
+          <p>Совместное тестирование, финальные правки и запуск вашего Telegram-бота. Готов принимать клиентов.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- СРАВНЕНИЕ -->
+<section class="compare-sec">
+  <div class="wrap">
+    <span class="eyebrow">Почему бот лучше</span>
+    <h2 class="sec-title">Три варианта — одна таблица</h2>
+    <div class="compare-wrap">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th></th>
+            <th class="col-bot">🤖 ИИ-агент GhostLogic</th>
+            <th class="col-admin">👩 Администратор</th>
+            <th class="col-basic">🔘 Кнопочный бот</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Скорость ответа</td>
+            <td class="col-bot">⚡ 2 секунды</td>
+            <td>2–30 минут</td>
+            <td>Мгновенно</td>
+          </tr>
+          <tr>
+            <td>Работает ночью</td>
+            <td class="col-bot"><span class="yes">✓</span> 24/7</td>
+            <td><span class="no">✗</span></td>
+            <td><span class="yes">✓</span></td>
+          </tr>
+          <tr>
+            <td>Понимает свободный текст</td>
+            <td class="col-bot"><span class="yes">✓</span> Любые вопросы</td>
+            <td><span class="yes">✓</span></td>
+            <td><span class="no">✗</span> Только кнопки</td>
+          </tr>
+          <tr>
+            <td>Сохраняет запись</td>
+            <td class="col-bot"><span class="yes">✓</span> В Google Таблицы</td>
+            <td><span class="part">~ </span>Иногда забывает</td>
+            <td><span class="no">✗</span></td>
+          </tr>
+          <tr>
+            <td>Стоимость в месяц</td>
+            <td class="col-bot">~$10–20 (серверы)</td>
+            <td>$400–800</td>
+            <td>$0–30</td>
+          </tr>
+          <tr>
+            <td>Напоминания клиентам</td>
+            <td class="col-bot"><span class="yes">✓</span> Автоматически</td>
+            <td><span class="part">~ </span>Вручную</td>
+            <td><span class="no">✗</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ГАРАНТИЯ -->
+<section class="guarantee-sec">
+  <div class="wrap">
+    <div class="guarantee-box">
+      <div class="guarantee-ico"><i class="fa-solid fa-shield-halved"></i></div>
+      <div>
+        <h3>Гарантия запуска за 72 часа</h3>
+        <p>Если не запустим бот в срок — <strong>скидка 20%</strong> без лишних вопросов. Я берусь только за те проекты, в которых уверен.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- 6. КЕЙС-ПРОГНОЗ -->
+<section class="case-sec">
+  <div class="wrap">
+    <span class="eyebrow">Модель окупаемости</span>
+    <h2 class="sec-title">Ваш администратор спит,<br>а бот зарабатывает</h2>
+    <p class="sec-sub">Введите свои цифры — и увидите, сколько денег уходит каждый месяц.</p>
+    <div class="case-card">
+      <div class="case-label">Интерактивный расчёт · Ваши реальные данные</div>
+
+      <div class="calc-inputs">
+        <div class="calc-input-row">
+          <label>Сколько заявок теряете в месяц из-за долгого ответа?</label>
+          <div class="calc-input-wrap">
+            <input type="range" id="lostLeads" min="1" max="50" value="15" oninput="calcROI()"/>
+            <span class="calc-val" id="lostLeadsVal">15</span>
+          </div>
+        </div>
+        <div class="calc-input-row">
+          <label>Средний чек одной процедуры ($)</label>
+          <div class="calc-input-wrap">
+            <input type="range" id="avgCheck" min="10" max="200" step="5" value="30" oninput="calcROI()"/>
+            <span class="calc-val" id="avgCheckVal">$30</span>
+          </div>
+        </div>
+        <div class="calc-input-row">
+          <label>Сколько администратор тратит на обработку чатов в день (часов)?</label>
+          <div class="calc-input-wrap">
+            <input type="range" id="adminHours" min="0.5" max="8" step="0.5" value="3" oninput="calcROI()"/>
+            <span class="calc-val" id="adminHoursVal">3ч</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="calc-result" id="calcResult">
+        <div class="calc-result-loss">
+          <div class="calc-result-num" id="lossNum">$450</div>
+          <div class="calc-result-label">теряете на упущенных записях</div>
+        </div>
+        <div class="calc-result-arrow">+</div>
+        <div class="calc-result-loss">
+          <div class="calc-result-num" id="adminLossNum">$225</div>
+          <div class="calc-result-label">платите за рутину в чатах</div>
+        </div>
+        <div class="calc-result-arrow">→</div>
+        <div class="calc-result-gain">
+          <div class="calc-result-num green" id="totalSave">$675</div>
+          <div class="calc-result-label">экономия в месяц с ботом</div>
+        </div>
+      </div>
+
+      <div class="calc-divider" id="calcNote">Бот окупается в первый же месяц</div>
+
+      <p style="font-size:.82rem;color:var(--txt2);line-height:1.68;margin-bottom:16px;">Бот работает без зарплаты, больничных и отпусков. Администратор освобождается для реальной работы с клиентами в зале.</p>
+      <a href="https://fpulotov.github.io/GlowClinic/" target="_blank" class="demo-link">
+        <i class="fa-solid fa-arrow-up-right-from-square" style="font-size:.78rem;"></i> Посмотреть демо-сайт для салона
+      </a>
+    </div>
+  </div>
+</section>
+
+
+<!-- 7. ЦЕНЫ -->
+<section class="pricing" id="pricing">
+  <div class="wrap">
+    <span class="eyebrow">Стоимость</span>
+    <h2 class="sec-title">Прозрачно. Без сюрпризов.</h2>
+    <p class="sec-sub">Единоразовая оплата за настройку. Никаких скрытых абонентских платежей.</p>
+
+    <div class="pricing-grid">
+      <div class="price-card">
+        <span class="price-tag light">Только бот</span>
+        <div class="price-num light">от $300</div>
+        <div class="price-note light">Инвестиция в автоматизацию (окупается за 14–20 дней)</div>
+        <ul class="price-list">
+          <li><span class="chk green">✓</span><span class="txt light">Telegram ИИ-агент под вашу нишу</span></li>
+          <li><span class="chk green">✓</span><span class="txt light">База знаний (прайс, FAQ, услуги)</span></li>
+          <li><span class="chk green">✓</span><span class="txt light">Запись клиентов в Google Таблицы</span></li>
+          <li><span class="chk green">✓</span><span class="txt light">Понимание голосовых сообщений</span></li>
+          <li><span class="chk green">✓</span><span class="txt light">Напоминания клиентам о визите</span></li>
+        </ul>
+        <a href="https://t.me/firdavs_0017" class="btn-outline" style="width:100%;font-size:.88rem;padding:13px;" target="_blank">
+          <i class="fa-brands fa-telegram"></i> Забронировать спеццену
+        </a>
+      </div>
+
+      <div class="price-card featured">
+        <div class="price-best-badge"><i class="fa-solid fa-fire" style="font-size:.52rem;"></i> Лучший старт</div>
+        <span class="price-tag dark">Бот + Лендинг</span>
+        <div class="price-num dark">от $450</div>
+        <div class="price-note dark">Инвестиция в автоматизацию (окупается за 14–20 дней)</div>
+        <ul class="price-list">
+          <li><span class="chk gold">✓</span><span class="txt dark">Всё из тарифа «Только бот»</span></li>
+          <li><span class="chk gold">✓</span><span class="txt dark">Персональный лендинг под ваш салон</span></li>
+          <li><span class="chk gold">✓</span><span class="txt dark">Кнопка «Записаться» ведёт в бота</span></li>
+          <li><span class="chk gold">✓</span><span class="txt dark">Постоянные обновления и поддержка</span></li>
+        </ul>
+        <a href="https://t.me/firdavs_0017" class="price-cta-ghost" target="_blank">
+          <i class="fa-brands fa-telegram"></i> Забронировать спеццену
+        </a>
+      </div>
+    </div>
+
+    <p class="price-fn">* Помимо настройки есть ежемесячные расходы: поддержка, серверы, токены ИИ и т.д. Обсудим индивидуально.</p>
+  </div>
+</section>
+
+
+<!-- 8. О СОЗДАТЕЛЕ -->
+<section class="about" id="about">
+  <div class="wrap">
+    <span class="eyebrow">Кто это делает</span>
+    <h2 class="sec-title">Вы работаете с человеком, а не с компанией</h2>
+    <div class="about-card">
+      <div class="about-top">
+        <div class="about-photo"><img src="images/founder.png" alt="Фирдавс"/></div>
+        <div class="about-meta">
+          <div class="about-name">Фирдавс</div>
+          <span class="about-tag">ИИ-разработчик</span>
+        </div>
+      </div>
+      <p class="about-quote">«Я не просто настраиваю бота — я проектирую логику продаж, которая не даёт клиенту уйти к конкуренту.»</p>
+      <p>Работаю через n8n и проверенный стек — каждую систему собираю и тестирую лично. Не шаблоны, не конструкторы — логика под ваш бизнес.</p>
+      <p>Вы получаете готовое решение через 72 часа и единственного ответственного человека, которому можно написать напрямую.</p>
+      <div class="about-stack">
+        <span class="about-stack-label">Что умеет бот:</span>
+        <span><i class="fa-solid fa-brain" style="color:var(--navy);"></i> OpenAI GPT-4o</span>
+        <span><i class="fa-solid fa-diagram-project" style="color:var(--navy);"></i> n8n</span>
+        <span><i class="fa-solid fa-bolt" style="color:var(--navy);"></i> Понимает сложные запросы</span>
+        <span><i class="fa-solid fa-shield-check" style="color:var(--navy);"></i> Работает без сбоев</span>
+        <span><i class="fa-brands fa-telegram" style="color:var(--navy);"></i> Telegram</span>
+        <span><i class="fa-solid fa-table-columns" style="color:var(--navy);"></i> Google Sheets</span>
+      </div>
+      <a href="https://t.me/firdavs_0017" class="about-cta" target="_blank">
+        <i class="fa-brands fa-telegram" style="color:#229ed9;"></i> Забронировать спеццену
+      </a>
+    </div>
+  </div>
+</section>
+
+
+<!-- 9. FAQ -->
+<section class="faq" id="faq">
+  <div class="wrap">
+    <span class="eyebrow">Вопросы</span>
+    <h2 class="sec-title">Частые вопросы</h2>
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">А если у меня уже есть администратор? <i class="fa-solid fa-chevron-down arr"></i></button>
+        <div class="faq-a">Бот не заменяет администратора — он освобождает его. Рутина в чате (ответы на одни и те же вопросы, запись, напоминания) уходит к боту, а ваш администратор занимается реальным сервисом в зале. Это повышает качество работы, а не убирает человека.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">Можно ли подключить бота к CRM или другим системам? <i class="fa-solid fa-chevron-down arr"></i></button>
+        <div class="faq-a">На данный момент я работаю с Google Таблицами — это простой, надёжный и понятный инструмент. Этого достаточно для полноценной автоматизации записи без лишних усложнений.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">А что если бот ошибётся или не поймёт клиента? <i class="fa-solid fa-chevron-down arr"></i></button>
+        <div class="faq-a">Бот обучен на вашей базе знаний и отвечает строго по ней. Если вопрос выходит за рамки — он сообщает об этом и передаёт диалог вам. Клиент никогда не остаётся без ответа.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">Сколько времени займёт запуск? <i class="fa-solid fa-chevron-down arr"></i></button>
+        <div class="faq-a">72 часа с момента передачи прайса и описаний услуг. День 1 — созвон. День 2 — сборка. День 3 — тест и запуск.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">Как быстро окупятся вложения? <i class="fa-solid fa-chevron-down arr"></i></button>
+        <div class="faq-a">При среднем чеке $30 и возврате хотя бы 10–15 клиентов, которые раньше уходили из-за медленных ответов, бот окупается в первый же месяц.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- 10. ФИНАЛЬНЫЙ CTA -->
+<section class="final-cta">
+  <div class="wrap">
+    <div class="final-box">
+      <div class="spots-pill">
+        <i class="fa-solid fa-fire" style="font-size:.55rem;"></i> Спецпредложение — осталось 3 места
+      </div>
+      <h2>Ищу 3 проекта из бьюти-сферы для кейса</h2>
+      <p>Сделаю из вашего Telegram инструмент, который приносит деньги, а не уведомления. Спеццена <strong style="color:var(--navy);">$240 вместо $300</strong> — в обмен на честный видео-отзыв после запуска.</p>
+      <a href="https://t.me/firdavs_0017" class="btn-gold" target="_blank">
+        <i class="fa-brands fa-telegram"></i> Написать Фирдавсу в Telegram
+      </a>
+    </div>
+  </div>
+</section>
+
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-in">
+    <div class="foot-brand">
+      <img src="images/logo.png" alt="GhostLogic AI"/>
+      <span>GhostLogic AI</span>
+    </div>
+    <div class="foot-socials">
+      <a href="https://t.me/firdavs_0017" target="_blank" aria-label="Telegram"><i class="fa-brands fa-telegram"></i></a>
+      <a href="https://www.instagram.com/ghostlogic_ai/" target="_blank" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+    </div>
+    <div class="foot-copy">© 2026 GhostLogic AI</div>
+  </div>
+</footer>
+
+
+<!-- FLOAT WIDGET -->
+<div class="float-widget" id="floatWidget">
+  <button class="float-close" id="floatClose" aria-label="Закрыть">✕</button>
+  <p>
+    <strong>Привет, я Фирдавс 👋</strong>
+    Автоматизирую запись для салонов красоты. Пишите — отвечу быстро.
+  </p>
+  <a href="https://t.me/firdavs_0017" class="float-link" target="_blank">
+    <i class="fa-brands fa-telegram"></i> Написать Фирдавсу
+  </a>
+</div>
+
+
+<script>
+  // ROI Calculator
+  function calcROI() {
+    const leads = parseFloat(document.getElementById('lostLeads').value);
+    const check = parseInt(document.getElementById('avgCheck').value);
+    const hours = parseFloat(document.getElementById('adminHours').value);
+    const leadLoss = Math.round(leads * check);
+    // admin cost estimate: avg admin $600/mo / 22 days / 8h * hours * 22
+    const adminHourRate = 3.5; // $/hour rough
+    const adminLoss = Math.round(hours * 22 * adminHourRate);
+    const total = leadLoss + adminLoss;
+    document.getElementById('lostLeadsVal').textContent = leads;
+    document.getElementById('avgCheckVal').textContent = '$' + check;
+    document.getElementById('adminHoursVal').textContent = hours + 'ч';
+    document.getElementById('lossNum').textContent = '$' + leadLoss;
+    document.getElementById('adminLossNum').textContent = '$' + adminLoss;
+    document.getElementById('totalSave').textContent = '$' + total;
+    document.getElementById('calcNote').textContent =
+      total >= 300
+        ? 'Бот окупается в первый же месяц — суммарные потери выше стоимости внедрения'
+        : 'Даже при небольших потерях бот освобождает администратора для реального сервиса';
+  }
+  calcROI();
+
+  // Scarcity banner — show after 3s
+  setTimeout(() => {
+    const bar = document.getElementById('scarcityBar');
+    if (bar) bar.classList.add('visible');
+  }, 3000);
+
+  // FAQ
+  document.querySelectorAll('.faq-q').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const isOpen = btn.getAttribute('aria-expanded') === 'true';
+      document.querySelectorAll('.faq-q').forEach(b => {
+        b.setAttribute('aria-expanded','false');
+        b.nextElementSibling.classList.remove('open');
+      });
+      if (!isOpen) {
+        btn.setAttribute('aria-expanded','true');
+        btn.nextElementSibling.classList.add('open');
+      }
+    });
+  });
+
+  // Float widget
+  const widget = document.getElementById('floatWidget');
+  const closeBtn = document.getElementById('floatClose');
+  let shown = false, closed = false;
+  window.addEventListener('scroll', () => {
+    if (closed || shown) return;
+    if (window.scrollY > window.innerHeight * 0.8) {
+      widget.style.display = 'block';
+      shown = true;
+    }
+  });
+  closeBtn && closeBtn.addEventListener('click', () => {
+    widget.style.display = 'none';
+    closed = true;
+  });
+</script>
+
+</body>
 </html>
