@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Дастархан — Казахская кухня в Алматы</title>
+  <meta name="description" content="Ресторан Дастархан — настоящая казахская кухня в Алматы. Бешбармак, манты, плов. Бронь за 1 минуту через WhatsApp."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet"/>
+  <style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --burg:#8B1A1A;--burg-d:#6B1010;--burg-l:#A52A2A;
+  --gold:#D4AF37;--gold-l:#E8CC6A;--gold-d:#B8941F;
+  --beige:#FDF5E6;--beige-d:#F0E0C0;
+  --text:#2A1A0A;--textm:#5A3E28;--textl:#9A7A5A;
+  --white:#fff;--nav:68px;--r:12px;--tr:.3s ease;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Lato',sans-serif;background:var(--beige);color:var(--text);overflow-x:hidden;line-height:1.7}
+h1,h2,h3,h4{font-family:'Cormorant Garamond',serif;line-height:1.2}
+img{display:block;max-width:100%;width:100%}
+a{text-decoration:none;color:inherit}
+ul{list-style:none}
+
+/* Container */
+.wrap{max-width:1160px;margin:0 auto;padding:0 18px}
+@media(min-width:768px){.wrap{padding:0 32px}}
+@media(min-width:1200px){.wrap{padding:0 24px}}
+
+/* Section spacing */
+.sec{padding:64px 0}
+@media(min-width:768px){.sec{padding:96px 0}}
+
+/* Labels */
+.lbl{
+  display:inline-block;font-family:'Lato',sans-serif;
+  font-size:0.72rem;font-weight:700;letter-spacing:3px;
+  text-transform:uppercase;color:var(--gold);margin-bottom:10px;
+}
+.lbl::before,.lbl::after{content:'—';margin:0 6px;opacity:.6}
+
+.ornament{text-align:center;color:var(--gold);font-size:1.3rem;letter-spacing:10px;opacity:.6;margin-bottom:12px}
+
+.stitle{font-size:clamp(1.8rem,5vw,2.9rem);color:var(--burg);margin-bottom:14px;line-height:1.15}
+.stitle.light{color:var(--gold)}
+.stitle.dark{color:var(--text)}
+
+.ssub{font-size:1rem;color:var(--textm);line-height:1.8;max-width:540px}
+@media(min-width:768px){.ssub{font-size:1.05rem}}
+
+/* Buttons */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  gap:8px;padding:14px 28px;border-radius:6px;
+  font-family:'Lato',sans-serif;font-size:0.92rem;font-weight:700;
+  border:2px solid transparent;transition:all var(--tr);
+  -webkit-tap-highlight-color:transparent;touch-action:manipulation;
+  position:relative;overflow:hidden;
+}
+.btn:active{transform:scale(.97)}
+
+.btn-gold{background:linear-gradient(135deg,var(--gold),var(--gold-l));color:var(--text);border-color:var(--gold-d);box-shadow:0 4px 18px rgba(212,175,55,.28)}
+.btn-gold:hover{background:linear-gradient(135deg,var(--gold-d),var(--gold));transform:translateY(-2px);box-shadow:0 8px 26px rgba(212,175,55,.4)}
+
+.btn-burg{background:linear-gradient(135deg,var(--burg),var(--burg-l));color:var(--white);border-color:var(--gold)}
+.btn-burg:hover{background:linear-gradient(135deg,var(--burg-d),var(--burg));transform:translateY(-2px);box-shadow:0 8px 24px rgba(139,26,26,.35)}
+
+.btn-ol{background:transparent;color:var(--gold);border-color:var(--gold)}
+.btn-ol:hover{background:rgba(212,175,55,.12);transform:translateY(-2px)}
+
+.btn-wa{background:linear-gradient(135deg,#25D366,#128C7E);color:var(--white);font-size:1rem;padding:16px 32px;box-shadow:0 6px 22px rgba(37,211,102,.33)}
+.btn-wa:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(37,211,102,.5)}
+
+.btn-full{width:100%}
+
+/* Reveal */
+.rv{opacity:0;transform:translateY(28px);transition:opacity .65s ease,transform .65s ease}
+.rv.on{opacity:1;transform:translateY(0)}
+.rv-l{opacity:0;transform:translateX(-28px);transition:opacity .65s ease,transform .65s ease}
+.rv-l.on{opacity:1;transform:translateX(0)}
+.rv-r{opacity:0;transform:translateX(28px);transition:opacity .65s ease,transform .65s ease}
+.rv-r.on{opacity:1;transform:translateX(0)}
+.d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}
+.d4{transition-delay:.32s}.d5{transition-delay:.40s}.d6{transition-delay:.48s}
+
+/* ══ NAVBAR ══════════════════════════════════ */
+#nav{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  height:var(--nav);background:rgba(253,245,230,.97);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  border-bottom:1px solid rgba(212,175,55,.18);
+  transition:box-shadow var(--tr);
+}
+#nav.sc{box-shadow:0 4px 24px rgba(139,26,26,.12)}
+
+.nav-in{display:flex;align-items:center;justify-content:space-between;height:100%}
+
+.nav-logo{display:flex;align-items:center;gap:9px;flex-shrink:0}
+.logo-orn{
+  width:38px;height:38px;
+  background:linear-gradient(135deg,var(--burg),var(--burg-l));
+  border:2px solid var(--gold);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;
+}
+.logo-name{font-family:'Cormorant Garamond',serif;font-size:1.45rem;font-weight:700;color:var(--burg);line-height:1}
+.logo-sub{font-family:'Lato',sans-serif;font-size:0.58rem;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold-d);font-weight:700}
+
+.nav-links{display:none;align-items:center;gap:4px}
+@media(min-width:1024px){.nav-links{display:flex}}
+.nav-links a{font-size:0.86rem;font-weight:700;color:var(--text);padding:8px 11px;border-radius:4px;transition:color var(--tr),background var(--tr)}
+.nav-links a:hover,.nav-links a.active{color:var(--burg);background:rgba(139,26,26,.06)}
+
+.nav-cta-d{display:none;margin-left:10px}
+@media(min-width:1024px){.nav-cta-d{display:block}}
+.nav-cta-d .btn{padding:10px 20px;font-size:0.86rem}
+
+.burger{display:flex;flex-direction:column;gap:5px;padding:6px;background:none;border:none;cursor:pointer;-webkit-tap-highlight-color:transparent}
+@media(min-width:1024px){.burger{display:none}}
+.burger span{display:block;width:22px;height:2px;background:var(--burg);border-radius:2px;transition:all var(--tr)}
+.burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.burger.open span:nth-child(2){opacity:0}
+.burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+.mob-menu{
+  display:none;position:fixed;top:var(--nav);left:0;right:0;
+  background:var(--beige);border-bottom:3px solid var(--gold);
+  padding:16px 18px 24px;z-index:999;
+  box-shadow:0 8px 28px rgba(0,0,0,.12);
+}
+.mob-menu.open{display:block}
+.mob-menu a{
+  display:block;font-size:1.05rem;font-weight:700;color:var(--text);
+  padding:13px 0;border-bottom:1px solid rgba(212,175,55,.18);
+  transition:color var(--tr),padding-left var(--tr);
+  -webkit-tap-highlight-color:transparent;
+}
+.mob-menu a:last-of-type{border-bottom:none}
+.mob-menu a:active,.mob-menu a:hover{color:var(--burg);padding-left:8px}
+.mob-menu .btn{margin-top:14px;width:100%}
+
+/* ══ HERO — with photo ═══════════════════════ */
+#hero{
+  min-height:100svh;min-height:100vh;
+  position:relative;display:flex;align-items:flex-end;
+  overflow:hidden;padding-top:var(--nav);
+}
+
+.hero-photo{
+  position:absolute;inset:0;
+  background-image:url('https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=1400&q=80&fit=crop&crop=center');
+  background-size:cover;background-position:center;
+}
+
+/* Layered dark overlay — text always readable */
+.hero-ov{
+  position:absolute;inset:0;
+  background:linear-gradient(
+    to bottom,
+    rgba(42,10,0,.50) 0%,
+    rgba(42,10,0,.30) 35%,
+    rgba(42,10,0,.72) 68%,
+    rgba(42,10,0,.90) 100%
+  );
+}
+
+/* Subtle gold pattern */
+.hero-pat{
+  position:absolute;inset:0;opacity:.04;
+  background-image:
+    repeating-linear-gradient(45deg,var(--gold) 0,var(--gold) 1px,transparent 0,transparent 40px),
+    repeating-linear-gradient(-45deg,var(--gold) 0,var(--gold) 1px,transparent 0,transparent 40px);
+}
+
+/* Decorative corners — hidden mobile */
+.hero-c{position:absolute;width:80px;height:80px;border:1.5px solid rgba(212,175,55,.3);display:none}
+@media(min-width:768px){.hero-c{display:block;width:110px;height:110px}}
+.hero-c.tl{top:calc(var(--nav)+16px);left:20px;border-right:none;border-bottom:none}
+.hero-c.tr{top:calc(var(--nav)+16px);right:20px;border-left:none;border-bottom:none}
+.hero-c.bl{bottom:20px;left:20px;border-right:none;border-top:none}
+.hero-c.br{bottom:20px;right:20px;border-left:none;border-top:none}
+
+.hero-cnt{
+  position:relative;z-index:2;
+  padding:0 18px 44px;width:100%;
+}
+@media(min-width:768px){.hero-cnt{padding:0 32px 64px}}
+@media(min-width:1200px){.hero-cnt{max-width:1160px;margin:0 auto;padding:0 24px 80px}}
+
+.hero-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(212,175,55,.15);border:1px solid rgba(212,175,55,.4);
+  color:var(--gold-l);font-size:0.76rem;font-weight:700;
+  letter-spacing:2px;text-transform:uppercase;
+  padding:7px 16px;border-radius:30px;margin-bottom:18px;
+}
+
+.hero-title{
+  font-size:clamp(2.2rem,9vw,4rem);
+  font-weight:700;color:var(--gold);
+  margin-bottom:18px;line-height:1.12;
+  text-shadow:0 2px 16px rgba(0,0,0,.35);
+}
+.hero-title em{font-style:italic;color:var(--gold-l)}
+
+.hero-sub{
+  font-size:clamp(.95rem,2.5vw,1.08rem);
+  color:rgba(253,245,230,.88);
+  margin-bottom:26px;max-width:480px;line-height:1.8;
+  text-shadow:0 1px 6px rgba(0,0,0,.25);
+}
+
+.hero-btns{display:flex;flex-direction:column;gap:10px;margin-bottom:36px}
+@media(min-width:480px){.hero-btns{flex-direction:row;flex-wrap:wrap}}
+@media(max-width:479px){.hero-btns .btn{width:100%}}
+
+.hero-stats{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  border-top:1px solid rgba(212,175,55,.22);padding-top:20px;
+}
+.hero-si{text-align:center;padding:0 6px;border-right:1px solid rgba(212,175,55,.22)}
+.hero-si:last-child{border-right:none}
+.hero-sn{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(1.2rem,4vw,1.6rem);font-weight:700;
+  color:var(--gold-l);display:block;line-height:1.1;margin-bottom:3px;
+  text-shadow:0 1px 8px rgba(0,0,0,.2);
+}
+.hero-sl{font-size:0.7rem;letter-spacing:.04em;color:rgba(253,245,230,.65);line-height:1.3;text-transform:uppercase}
+
+/* Scroll hint */
+.scroll-hint{
+  position:absolute;bottom:18px;left:50%;transform:translateX(-50%);
+  z-index:2;display:flex;flex-direction:column;align-items:center;gap:5px;
+  color:rgba(212,175,55,.5);font-size:0.65rem;letter-spacing:2px;text-transform:uppercase;
+  animation:sh 2s ease-in-out infinite;
+}
+.scroll-hint::after{content:'';width:1px;height:32px;background:linear-gradient(to bottom,rgba(212,175,55,.5),transparent)}
+@keyframes sh{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(6px)}}
+
+/* ══ ABOUT ════════════════════════════════════ */
+#about{background:var(--white);position:relative;overflow:hidden}
+#about::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--burg),var(--gold),var(--burg))}
+
+.about-grid{display:grid;grid-template-columns:1fr;gap:36px}
+@media(min-width:768px){.about-grid{grid-template-columns:1fr 1fr;gap:64px;align-items:center}}
+
+.about-intro{
+  font-size:1rem;color:var(--textm);line-height:1.9;margin-bottom:28px;font-style:italic;
+}
+.about-intro::first-letter{
+  font-family:'Cormorant Garamond',serif;font-size:3rem;font-weight:700;
+  color:var(--burg);float:left;line-height:.75;margin-right:8px;margin-top:8px;
+}
+
+.about-feats{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.about-feat{
+  display:flex;align-items:flex-start;gap:10px;
+  padding:14px;background:var(--beige);
+  border-radius:var(--r);border:1px solid rgba(212,175,55,.18);
+  transition:var(--tr);
+}
+@media(min-width:768px){.about-feat:hover{border-color:var(--gold);transform:translateY(-3px);box-shadow:0 4px 18px rgba(212,175,55,.22)}}
+.about-feat-icon{font-size:1.5rem;flex-shrink:0}
+.about-feat strong{display:block;font-size:0.85rem;color:var(--burg);font-weight:700;margin-bottom:1px}
+.about-feat span{font-size:0.75rem;color:var(--textl)}
+
+/* About visual — real photo */
+.about-vis{position:relative;border-radius:16px;overflow:hidden}
+.about-vis-img{
+  width:100%;aspect-ratio:3/4;object-fit:cover;display:block;
+}
+@media(min-width:768px){.about-vis-img{aspect-ratio:4/5}}
+
+.about-vis-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(42,10,0,.65) 0%,transparent 55%);
+}
+.about-acc{
+  position:absolute;padding:12px 16px;border-radius:10px;
+  background:var(--beige);box-shadow:0 8px 26px rgba(0,0,0,.18);text-align:center;
+}
+.about-acc.a1{top:-16px;right:-16px}
+.about-acc.a2{bottom:36px;left:-22px}
+@media(max-width:767px){.about-acc.a1{top:12px;right:12px}.about-acc.a2{bottom:12px;left:12px}}
+.about-acc .acc-n{font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:700;color:var(--burg);line-height:1}
+.about-acc .acc-l{font-size:0.7rem;color:var(--textl);font-weight:700;text-transform:uppercase;letter-spacing:1px}
+
+/* ══ MENU ═════════════════════════════════════ */
+#menu{background:var(--beige);position:relative}
+#menu::after{content:'';position:absolute;bottom:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--gold),var(--burg),var(--gold))}
+
+/* Tab buttons — scrollable on mobile */
+.menu-tabs{
+  display:flex;gap:6px;justify-content:flex-start;
+  overflow-x:auto;-webkit-overflow-scrolling:touch;
+  scrollbar-width:none;padding-bottom:2px;
+  margin-bottom:32px;
+}
+.menu-tabs::-webkit-scrollbar{display:none}
+@media(min-width:640px){.menu-tabs{justify-content:center;flex-wrap:wrap;overflow-x:visible}}
+
+.tab-btn{
+  padding:10px 20px;border:2px solid rgba(212,175,55,.3);
+  background:transparent;font-family:'Lato',sans-serif;
+  font-size:0.86rem;font-weight:700;color:var(--textm);
+  cursor:pointer;border-radius:50px;transition:var(--tr);white-space:nowrap;
+  flex-shrink:0;-webkit-tap-highlight-color:transparent;
+}
+.tab-btn:hover{color:var(--burg);border-color:var(--gold)}
+.tab-btn.active{background:linear-gradient(135deg,var(--burg),var(--burg-l));color:var(--white);border-color:transparent;box-shadow:0 4px 18px rgba(139,26,26,.28)}
+
+.tab-panel{display:none}
+.tab-panel.active{display:block}
+
+.menu-grid{display:grid;grid-template-columns:1fr;gap:12px}
+@media(min-width:640px){.menu-grid{grid-template-columns:repeat(2,1fr);gap:14px}}
+
+/* Menu item with optional photo */
+.menu-item{
+  display:flex;align-items:center;gap:14px;
+  padding:16px 18px;background:var(--white);
+  border-radius:var(--r);border:1px solid rgba(212,175,55,.14);
+  transition:var(--tr);position:relative;overflow:hidden;
+}
+.menu-item::before{
+  content:'';position:absolute;left:0;top:0;bottom:0;width:4px;
+  background:linear-gradient(180deg,var(--burg),var(--gold));
+  transform:scaleY(0);transform-origin:bottom;transition:transform .3s;
+}
+@media(min-width:768px){
+  .menu-item:hover::before{transform:scaleY(1)}
+  .menu-item:hover{border-color:var(--gold);transform:translateX(4px);box-shadow:0 4px 18px rgba(212,175,55,.2)}
+}
+
+.menu-photo{width:56px;height:56px;border-radius:8px;overflow:hidden;flex-shrink:0}
+.menu-photo img{width:100%;height:100%;object-fit:cover}
+
+.menu-icon-fb{
+  font-size:1.8rem;flex-shrink:0;width:52px;height:52px;
+  background:var(--beige);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  border:1px solid rgba(212,175,55,.18);
+}
+.menu-info{flex:1;min-width:0}
+.menu-name{font-family:'Cormorant Garamond',serif;font-size:1.08rem;font-weight:600;color:var(--text);margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.menu-desc{font-size:0.78rem;color:var(--textl);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.menu-price{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:700;color:var(--burg);white-space:nowrap;flex-shrink:0}
+
+.menu-cta{text-align:center;margin-top:36px}
+
+/* ══ GALLERY ══════════════════════════════════ */
+#gallery{background:var(--white)}
+
+.gal-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(min-width:768px){.gal-grid{grid-template-columns:repeat(3,1fr);gap:16px}}
+
+.gal-item{
+  position:relative;border-radius:var(--r);overflow:hidden;
+  aspect-ratio:4/3;cursor:pointer;
+}
+.gal-item:first-child{grid-column:1/-1;aspect-ratio:16/9}
+@media(min-width:768px){.gal-item:first-child{grid-column:1/3;aspect-ratio:4/3}}
+
+.gal-item img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease}
+.gal-item:hover img{transform:scale(1.07)}
+
+/* Bottom gradient — always show label on mobile */
+.gal-cap{
+  position:absolute;bottom:0;left:0;right:0;
+  padding:32px 14px 12px;
+  background:linear-gradient(to top,rgba(42,10,0,.78) 0%,transparent 100%);
+}
+.gal-lb{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:600;color:var(--white);display:block}
+.gal-sub{font-size:0.72rem;color:var(--gold-l);letter-spacing:1.5px;text-transform:uppercase;opacity:0;transition:opacity .35s}
+@media(min-width:768px){.gal-item:hover .gal-sub{opacity:1}}
+
+/* ══ REVIEWS ══════════════════════════════════ */
+#reviews{background:var(--beige)}
+
+.rvw-grid{display:grid;grid-template-columns:1fr;gap:16px}
+@media(min-width:600px){.rvw-grid{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:1024px){.rvw-grid{grid-template-columns:repeat(3,1fr);gap:22px}}
+
+.rvw-card{
+  background:var(--white);border-radius:var(--r);
+  padding:30px 24px 24px;border:1px solid rgba(212,175,55,.14);
+  position:relative;transition:var(--tr);
+}
+@media(min-width:768px){.rvw-card:hover{transform:translateY(-5px);box-shadow:0 8px 30px rgba(139,26,26,.14)}}
+
+.rvw-q{
+  position:absolute;top:16px;left:22px;
+  font-family:'Cormorant Garamond',serif;font-size:4.5rem;
+  line-height:1;color:var(--gold);opacity:.18;font-weight:700;
+}
+.rvw-stars{color:var(--gold);font-size:0.95rem;letter-spacing:2px;margin-bottom:12px}
+.rvw-text{font-size:0.9rem;color:var(--textm);font-style:italic;line-height:1.8;margin-bottom:20px;position:relative;z-index:1}
+
+.rvw-auth{display:flex;align-items:center;gap:12px;padding-top:14px;border-top:1px solid rgba(212,175,55,.18)}
+.rvw-av{
+  width:42px;height:42px;border-radius:50%;flex-shrink:0;
+  background:linear-gradient(135deg,var(--burg),var(--burg-l));
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:700;
+  color:var(--gold);border:2px solid var(--gold);
+}
+.rvw-name{font-weight:700;font-size:0.88rem;color:var(--text)}
+.rvw-date{font-size:0.74rem;color:var(--textl)}
+
+/* ══ BOOKING ══════════════════════════════════ */
+#booking{
+  padding:64px 0;position:relative;overflow:hidden;
+  background:linear-gradient(155deg,#3D0C0C 0%,#5C1A1A 40%,#2A0A00 100%);
+}
+#booking::before{
+  content:'';position:absolute;inset:0;opacity:.05;
+  background-image:
+    repeating-linear-gradient(45deg,var(--gold) 0,var(--gold) 1px,transparent 0,transparent 40px),
+    repeating-linear-gradient(-45deg,var(--gold) 0,var(--gold) 1px,transparent 0,transparent 40px);
+}
+@media(min-width:768px){#booking{padding:88px 0}}
+
+.bk-in{position:relative;z-index:2;text-align:center;max-width:660px;margin:0 auto}
+.bk-sub{font-size:0.97rem;color:rgba(253,245,230,.75);line-height:1.8;margin-bottom:44px}
+
+.bk-steps{
+  display:flex;flex-direction:column;gap:20px;
+  align-items:center;margin-bottom:40px;
+}
+@media(min-width:600px){.bk-steps{flex-direction:row;justify-content:center;gap:0}}
+
+.bk-step{
+  display:flex;flex-direction:column;align-items:center;gap:10px;
+  flex:1;min-width:140px;max-width:180px;
+}
+.bk-num{
+  width:52px;height:52px;border-radius:50%;
+  background:rgba(212,175,55,.15);border:2px solid var(--gold);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:700;color:var(--gold);
+}
+.bk-icon{font-size:1.4rem}
+.bk-lbl{font-size:0.82rem;color:rgba(253,245,230,.8);text-align:center;line-height:1.4}
+.bk-arr{font-size:1.4rem;color:rgba(212,175,55,.35);align-self:center;padding-bottom:28px;display:none}
+@media(min-width:600px){.bk-arr{display:block}}
+
+/* ══ CONTACTS ═════════════════════════════════ */
+#contacts{background:var(--white)}
+
+.ct-grid{display:grid;grid-template-columns:1fr;gap:28px}
+@media(min-width:768px){.ct-grid{grid-template-columns:1fr 1fr;gap:44px;align-items:start}}
+
+.ct-list{display:flex;flex-direction:column;gap:12px}
+
+.ct-item{
+  display:flex;align-items:flex-start;gap:14px;
+  padding:16px 18px;background:var(--beige);
+  border-radius:var(--r);border:1px solid rgba(212,175,55,.15);
+  transition:var(--tr);
+}
+@media(min-width:768px){.ct-item:hover{border-color:var(--gold);transform:translateX(4px)}}
+
+.ct-ico{
+  width:42px;height:42px;border-radius:50%;flex-shrink:0;
+  background:linear-gradient(135deg,var(--burg),var(--burg-l));
+  display:flex;align-items:center;justify-content:center;font-size:1.15rem;
+}
+.ct-lbl{display:block;font-size:0.75rem;text-transform:uppercase;letter-spacing:1px;color:var(--textl);margin-bottom:3px}
+.ct-val{font-size:0.9rem;color:var(--text);font-weight:700;line-height:1.5}
+.ct-val small{display:block;font-size:0.78rem;color:var(--textl);font-weight:400;margin-top:1px}
+
+/* Map placeholder */
+.map-ph{
+  border-radius:var(--r);border:2px solid rgba(212,175,55,.28);
+  background:linear-gradient(145deg,#f0e8d0,#e8ddc0);
+  aspect-ratio:16/10;position:relative;overflow:hidden;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;transition:var(--tr);
+}
+@media(min-width:768px){.map-ph:hover{border-color:var(--gold);box-shadow:0 8px 26px rgba(139,26,26,.14)}}
+
+.map-grid-pat{
+  position:absolute;inset:0;
+  background-image:linear-gradient(rgba(139,26,26,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(139,26,26,.06) 1px,transparent 1px);
+  background-size:36px 36px;
+}
+.map-mc{position:absolute;border-radius:50%;background:rgba(139,26,26,.07)}
+.mc1{width:180px;height:180px;bottom:-70px;right:-50px}
+.mc2{width:110px;height:110px;top:-35px;left:-25px}
+
+.map-body{position:relative;z-index:1;text-align:center;padding:20px}
+.map-pin{font-size:3rem;display:block;animation:pinB 2s ease-in-out infinite;filter:drop-shadow(0 4px 8px rgba(139,26,26,.3))}
+@keyframes pinB{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.map-t{font-family:'Cormorant Garamond',serif;font-size:1.25rem;font-weight:600;color:var(--burg);margin-top:4px}
+.map-a{font-size:0.8rem;color:var(--textl);margin-top:3px}
+.map-btn-2gis{
+  display:inline-flex;align-items:center;gap:6px;margin-top:14px;
+  background:var(--white);color:var(--burg);font-weight:700;font-size:0.82rem;
+  padding:9px 18px;border-radius:50px;border:2px solid var(--gold);
+  transition:var(--tr);
+}
+.map-btn-2gis:hover{background:var(--burg);color:var(--gold);transform:translateY(-2px)}
+
+/* ══ FOOTER ═══════════════════════════════════ */
+#footer{
+  background:linear-gradient(160deg,#2A0A00 0%,#3D0C0C 50%,#1A0800 100%);
+  padding:52px 0 28px;position:relative;overflow:hidden;
+}
+#footer::before{content:'';position:absolute;inset:0;opacity:.04;background-image:repeating-linear-gradient(45deg,var(--gold) 0,var(--gold) 1px,transparent 0,transparent 30px),repeating-linear-gradient(-45deg,var(--gold) 0,var(--gold) 1px,transparent 0,transparent 30px)}
+#footer::after{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--burg),var(--gold),var(--burg))}
+
+.ft-in{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:22px}
+.ft-logo-name{font-family:'Cormorant Garamond',serif;font-size:1.9rem;font-weight:700;color:var(--gold);text-align:center}
+.ft-slogan{font-size:0.75rem;color:rgba(253,245,230,.48);letter-spacing:2px;text-transform:uppercase;margin-top:4px;text-align:center}
+.ft-div{width:180px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:.4}
+.ft-socs{display:flex;gap:14px}
+.ft-soc{
+  width:44px;height:44px;border-radius:50%;
+  border:1px solid rgba(212,175,55,.28);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.1rem;color:rgba(253,245,230,.65);
+  transition:var(--tr);-webkit-tap-highlight-color:transparent;
+}
+.ft-soc:active,.ft-soc:hover{border-color:var(--gold);color:var(--gold);background:rgba(212,175,55,.1)}
+.ft-orn{font-size:1.1rem;letter-spacing:8px;color:rgba(212,175,55,.22)}
+.ft-copy{font-size:0.77rem;color:rgba(253,245,230,.32);text-align:center}
+
+/* ══ FLOAT WA ════════════════════════════════ */
+.fl-wa{
+  position:fixed;bottom:18px;right:14px;z-index:9999;
+  width:52px;height:52px;border-radius:50%;
+  background:linear-gradient(135deg,#25D366,#128C7E);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--white);box-shadow:0 6px 22px rgba(37,211,102,.45);
+  transition:transform .3s,box-shadow .3s;
+  -webkit-tap-highlight-color:transparent;
+}
+@media(min-width:768px){.fl-wa{bottom:26px;right:26px;width:58px;height:58px}}
+.fl-wa::before{content:'';position:absolute;inset:-6px;border-radius:50%;border:2px solid rgba(37,211,102,.35);animation:waRing 2.5s ease-in-out infinite}
+.fl-wa:active{transform:scale(.94)}
+.fl-wa:hover{transform:scale(1.1);box-shadow:0 10px 32px rgba(37,211,102,.6)}
+@keyframes waRing{0%{transform:scale(1);opacity:.6}100%{transform:scale(1.6);opacity:0}}
+
+.fl-tip{position:absolute;right:66px;background:var(--text);color:var(--white);font-size:0.75rem;font-weight:700;padding:6px 12px;border-radius:6px;white-space:nowrap;opacity:0;transform:translateX(6px);transition:opacity .2s,transform .2s;pointer-events:none}
+.fl-tip::after{content:'';position:absolute;right:-5px;top:50%;transform:translateY(-50%);border:5px solid transparent;border-right:none;border-left-color:var(--text)}
+.fl-wa:hover .fl-tip{opacity:1;transform:translateX(0)}
+.fl-wa svg{width:24px;height:24px;fill:#fff}
+@media(min-width:768px){.fl-wa svg{width:26px;height:26px}}
+  </style>
+</head>
+<body>
+
+<!-- Float WA -->
+<a href="https://wa.me/77054567890" target="_blank" class="fl-wa" aria-label="WhatsApp">
+  <span class="fl-tip">Забронировать стол</span>
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<!-- NAVBAR -->
+<nav id="nav">
+  <div class="wrap">
+    <div class="nav-in">
+      <a href="#hero" class="nav-logo">
+        <div class="logo-orn">🍽</div>
+        <div><div class="logo-name">Дастархан</div><div class="logo-sub">Казахская кухня</div></div>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#about">О нас</a></li>
+        <li><a href="#menu">Меню</a></li>
+        <li><a href="#gallery">Галерея</a></li>
+        <li><a href="#reviews">Отзывы</a></li>
+        <li><a href="#booking">Бронь</a></li>
+        <li><a href="#contacts">Контакты</a></li>
+      </ul>
+      <div class="nav-cta-d">
+        <a href="https://wa.me/77054567890" target="_blank" class="btn btn-burg">Забронировать стол</a>
+      </div>
+      <button class="burger" id="burger" aria-label="Меню"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+  <div class="mob-menu" id="mobMenu">
+    <a href="#about">О нас</a>
+    <a href="#menu">Меню и цены</a>
+    <a href="#gallery">Галерея</a>
+    <a href="#reviews">Отзывы</a>
+    <a href="#booking">Бронирование</a>
+    <a href="#contacts">Контакты</a>
+    <a href="https://wa.me/77054567890" target="_blank" class="btn btn-burg">🍽 Забронировать стол</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-photo"></div>
+  <div class="hero-ov"></div>
+  <div class="hero-pat"></div>
+  <div class="hero-c tl"></div><div class="hero-c tr"></div>
+  <div class="hero-c bl"></div><div class="hero-c br"></div>
+
+  <div class="hero-cnt rv">
+    <div class="hero-badge">✨ &nbsp; Настоящая казахская кухня · Алматы</div>
+    <h1 class="hero-title">Здесь едят так,<br><em>как готовят дома</em></h1>
+    <p class="hero-sub">Бешбармак, манты, плов и сорпа — рецепты, которые передаются из поколения в поколение. Зал на 80 мест. Бронь за 1&nbsp;минуту.</p>
+    <div class="hero-btns">
+      <a href="https://wa.me/77054567890" target="_blank" class="btn btn-gold">🍽 Забронировать стол</a>
+      <a href="#menu" class="btn btn-ol">Смотреть меню</a>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-si"><span class="hero-sn">80 мест</span><div class="hero-sl">Большой зал</div></div>
+      <div class="hero-si"><span class="hero-sn">До 23:00</span><div class="hero-sl">Ежедневно</div></div>
+      <div class="hero-si"><span class="hero-sn">4.8 ★</span><div class="hero-sl">500+ отзывов</div></div>
+    </div>
+  </div>
+  <div class="scroll-hint">Листай</div>
+</section>
+
+<!-- ABOUT -->
+<section id="about" class="sec">
+  <div class="wrap">
+    <div class="about-grid">
+      <div class="rv-l">
+        <span class="lbl">О нас</span>
+        <h2 class="stitle dark">7 лет кормим Алматы</h2>
+        <p class="about-intro">Дастархан открылся в 2018 году с одной идеей — готовить так, как готовят казахские бабушки. Никаких полуфабрикатов: только живое мясо, домашнее тесто и настоящий бульон на кости. Каждое блюдо — это история, вкус и уважение к традиции.</p>
+        <div class="about-feats">
+          <div class="about-feat"><span class="about-feat-icon">🥩</span><div><strong>Свежее мясо</strong><span>Только с рынка, каждый день</span></div></div>
+          <div class="about-feat"><span class="about-feat-icon">👨‍🍳</span><div><strong>Опытные повара</strong><span>От 8 лет на кухне</span></div></div>
+          <div class="about-feat"><span class="about-feat-icon">🏠</span><div><strong>Уютный зал</strong><span>Национальный колорит</span></div></div>
+          <div class="about-feat"><span class="about-feat-icon">🎉</span><div><strong>Банкеты</strong><span>До 80 человек, любой повод</span></div></div>
+        </div>
+      </div>
+      <div class="about-vis rv-r">
+        <img class="about-vis-img" src="https://images.unsplash.com/photo-1547592166-23ac45744acd?w=800&q=80&fit=crop&crop=center" alt="Казахская кухня" loading="lazy"/>
+        <div class="about-vis-overlay"></div>
+        <div class="about-acc a1"><div class="acc-n">80</div><div class="acc-l">Мест в зале</div></div>
+        <div class="about-acc a2"><div class="acc-n">12+</div><div class="acc-l">Блюд в меню</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section id="menu" class="sec">
+  <div class="wrap">
+    <div class="rv" style="text-align:center;margin-bottom:14px">
+      <span class="lbl">Наше меню</span>
+      <div class="ornament">❖ ✦ ❖</div>
+      <h2 class="stitle">Блюда и цены</h2>
+      <p class="ssub" style="margin:0 auto 32px">Готовим из свежих продуктов по традиционным рецептам. Порции большие — уйдёте сытыми.</p>
+    </div>
+
+    <div class="menu-tabs">
+      <button class="tab-btn active" data-tab="hot">🍖 Горячее</button>
+      <button class="tab-btn" data-tab="snacks">🥗 Закуски</button>
+      <button class="tab-btn" data-tab="drinks">☕ Напитки</button>
+      <button class="tab-btn" data-tab="desserts">🍯 Десерты</button>
+    </div>
+
+    <!-- Горячее -->
+    <div class="tab-panel active" id="tab-hot">
+      <div class="menu-grid">
+        <div class="menu-item rv d1">
+          <div class="menu-photo"><img src="https://images.unsplash.com/photo-1529042410759-befb1204b468?w=120&q=75&fit=crop" alt="Бешбармак" loading="lazy"/></div>
+          <div class="menu-info"><div class="menu-name">Бешбармак из баранины</div><div class="menu-desc">Традиционное, подаётся с луковым соусом</div></div>
+          <div class="menu-price">3 500 ₸</div>
+        </div>
+        <div class="menu-item rv d2">
+          <div class="menu-photo"><img src="https://images.unsplash.com/photo-1496116218417-1a781b1c416c?w=120&q=75&fit=crop" alt="Манты" loading="lazy"/></div>
+          <div class="menu-info"><div class="menu-name">Манты с говядиной (10 шт)</div><div class="menu-desc">На пару, домашнее тесто</div></div>
+          <div class="menu-price">2 200 ₸</div>
+        </div>
+        <div class="menu-item rv d3">
+          <div class="menu-photo"><img src="https://images.unsplash.com/photo-1512058564366-18510be2db19?w=120&q=75&fit=crop" alt="Плов" loading="lazy"/></div>
+          <div class="menu-info"><div class="menu-name">Плов по-самаркандски</div><div class="menu-desc">С морковью и изюмом</div></div>
+          <div class="menu-price">2 800 ₸</div>
+        </div>
+        <div class="menu-item rv d4">
+          <div class="menu-icon-fb">🍲</div>
+          <div class="menu-info"><div class="menu-name">Сорпа из баранины</div><div class="menu-desc">Наваристый бульон, зелень</div></div>
+          <div class="menu-price">1 800 ₸</div>
+        </div>
+        <div class="menu-item rv d5">
+          <div class="menu-icon-fb">🥩</div>
+          <div class="menu-info"><div class="menu-name">Казы</div><div class="menu-desc">Домашняя конская колбаса</div></div>
+          <div class="menu-price">2 500 ₸</div>
+        </div>
+        <div class="menu-item rv d6">
+          <div class="menu-icon-fb">🍗</div>
+          <div class="menu-info"><div class="menu-name">Куырдак</div><div class="menu-desc">Жаркое из субпродуктов</div></div>
+          <div class="menu-price">2 400 ₸</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Закуски -->
+    <div class="tab-panel" id="tab-snacks">
+      <div class="menu-grid">
+        <div class="menu-item rv d1"><div class="menu-icon-fb">🥗</div><div class="menu-info"><div class="menu-name">Салат "Шопский"</div><div class="menu-desc">Томаты, огурцы, брынза</div></div><div class="menu-price">1 200 ₸</div></div>
+        <div class="menu-item rv d2"><div class="menu-icon-fb">🧅</div><div class="menu-info"><div class="menu-name">Нарын</div><div class="menu-desc">Тонкая лапша с мясом</div></div><div class="menu-price">1 500 ₸</div></div>
+        <div class="menu-item rv d3"><div class="menu-icon-fb">🫓</div><div class="menu-info"><div class="menu-name">Баурсаки (порция)</div><div class="menu-desc">Жареные, пышные, горячие</div></div><div class="menu-price">800 ₸</div></div>
+        <div class="menu-item rv d4"><div class="menu-icon-fb">🥒</div><div class="menu-info"><div class="menu-name">Ассорти из солений</div><div class="menu-desc">Огурцы, помидоры, перец</div></div><div class="menu-price">900 ₸</div></div>
+      </div>
+    </div>
+
+    <!-- Напитки -->
+    <div class="tab-panel" id="tab-drinks">
+      <div class="menu-grid">
+        <div class="menu-item rv d1"><div class="menu-icon-fb">☕</div><div class="menu-info"><div class="menu-name">Чай по-казахски с молоком</div><div class="menu-desc">Традиционный, крепкий</div></div><div class="menu-price">500 ₸</div></div>
+        <div class="menu-item rv d2"><div class="menu-icon-fb">🥛</div><div class="menu-info"><div class="menu-name">Кумыс (0.5л)</div><div class="menu-desc">Натуральный, фермерский</div></div><div class="menu-price">700 ₸</div></div>
+        <div class="menu-item rv d3"><div class="menu-icon-fb">🧃</div><div class="menu-info"><div class="menu-name">Свежевыжатый сок</div><div class="menu-desc">Апельсин, яблоко, морковь</div></div><div class="menu-price">900 ₸</div></div>
+        <div class="menu-item rv d4"><div class="menu-icon-fb">💧</div><div class="menu-info"><div class="menu-name">Вода Borjomi</div><div class="menu-desc">Газированная, 0.5л</div></div><div class="menu-price">400 ₸</div></div>
+      </div>
+    </div>
+
+    <!-- Десерты -->
+    <div class="tab-panel" id="tab-desserts">
+      <div class="menu-grid">
+        <div class="menu-item rv d1"><div class="menu-icon-fb">🍯</div><div class="menu-info"><div class="menu-name">Чак-чак домашний</div><div class="menu-desc">Тесто на меду, по бабушкиному рецепту</div></div><div class="menu-price">1 200 ₸</div></div>
+        <div class="menu-item rv d2"><div class="menu-icon-fb">🍮</div><div class="menu-info"><div class="menu-name">Кульша с мёдом</div><div class="menu-desc">Жареный хлеб, горячий</div></div><div class="menu-price">800 ₸</div></div>
+        <div class="menu-item rv d3"><div class="menu-icon-fb">🧁</div><div class="menu-info"><div class="menu-name">Торт "Медовик" (порция)</div><div class="menu-desc">Нежные коржи, сметанный крем</div></div><div class="menu-price">1 000 ₸</div></div>
+      </div>
+    </div>
+
+    <div class="menu-cta rv">
+      <a href="https://wa.me/77054567890" target="_blank" class="btn btn-burg" style="font-size:.98rem;padding:15px 32px">
+        Забронировать стол → WhatsApp
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery" class="sec">
+  <div class="wrap">
+    <div class="rv" style="text-align:center;margin-bottom:40px">
+      <span class="lbl">Атмосфера</span>
+      <div class="ornament">❖ ✦ ❖</div>
+      <h2 class="stitle">Наши блюда и зал</h2>
+    </div>
+    <div class="gal-grid">
+
+      <div class="gal-item rv d1">
+        <img src="https://images.unsplash.com/photo-1529042410759-befb1204b468?w=900&q=80&fit=crop&crop=center" alt="Бешбармак" loading="lazy"/>
+        <div class="gal-cap"><span class="gal-sub">Горячее блюдо</span><span class="gal-lb">Бешбармак</span></div>
+      </div>
+
+      <div class="gal-item rv d2">
+        <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=600&q=80&fit=crop&crop=center" alt="Зал ресторана" loading="lazy"/>
+        <div class="gal-cap"><span class="gal-sub">Интерьер</span><span class="gal-lb">Зал ресторана</span></div>
+      </div>
+
+      <div class="gal-item rv d3">
+        <img src="https://images.unsplash.com/photo-1496116218417-1a781b1c416c?w=600&q=80&fit=crop&crop=center" alt="Манты" loading="lazy"/>
+        <div class="gal-cap"><span class="gal-sub">На пару</span><span class="gal-lb">Манты</span></div>
+      </div>
+
+      <div class="gal-item rv d2">
+        <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=600&q=80&fit=crop&crop=center" alt="Наши повара" loading="lazy"/>
+        <div class="gal-cap"><span class="gal-sub">Команда</span><span class="gal-lb">Наши повара</span></div>
+      </div>
+
+      <div class="gal-item rv d3">
+        <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&q=80&fit=crop&crop=center" alt="Банкетный зал" loading="lazy"/>
+        <div class="gal-cap"><span class="gal-sub">Торжества</span><span class="gal-lb">Банкетный зал</span></div>
+      </div>
+
+      <div class="gal-item rv d4">
+        <img src="https://images.unsplash.com/photo-1512058564366-18510be2db19?w=600&q=80&fit=crop&crop=center" alt="Плов" loading="lazy"/>
+        <div class="gal-cap"><span class="gal-sub">Самаркандский</span><span class="gal-lb">Плов</span></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS -->
+<section id="reviews" class="sec">
+  <div class="wrap">
+    <div class="rv" style="text-align:center;margin-bottom:40px">
+      <span class="lbl">Отзывы</span>
+      <div class="ornament">❖ ✦ ❖</div>
+      <h2 class="stitle">Что говорят наши гости</h2>
+    </div>
+    <div class="rvw-grid">
+      <div class="rvw-card rv d1">
+        <div class="rvw-q">"</div>
+        <div class="rvw-stars">★★★★★</div>
+        <p class="rvw-text">Бешбармак как у мамы дома. Порции огромные, мясо тает во рту. Приходим сюда всей семьёй каждые выходные.</p>
+        <div class="rvw-auth"><div class="rvw-av">А</div><div><div class="rvw-name">Арман Д.</div><div class="rvw-date">2GIS · Ноябрь 2024</div></div></div>
+      </div>
+      <div class="rvw-card rv d2">
+        <div class="rvw-q">"</div>
+        <div class="rvw-stars">★★★★★</div>
+        <p class="rvw-text">Отмечали день рождения на 30 человек. Всё организовали идеально — вкусно, вовремя, персонал внимательный. Спасибо!</p>
+        <div class="rvw-auth"><div class="rvw-av">Г</div><div><div class="rvw-name">Гульмира С.</div><div class="rvw-date">Instagram · Октябрь 2024</div></div></div>
+      </div>
+      <div class="rvw-card rv d3">
+        <div class="rvw-q">"</div>
+        <div class="rvw-stars">★★★★★</div>
+        <p class="rvw-text">Манты — лучшие в Алматы, без преувеличений. Тесто тонкое, начинка сочная. Уже в третий раз здесь.</p>
+        <div class="rvw-auth"><div class="rvw-av">Т</div><div><div class="rvw-name">Тимур А.</div><div class="rvw-date">2GIS · Декабрь 2024</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BOOKING -->
+<section id="booking">
+  <div class="wrap">
+    <div class="bk-in">
+      <div class="rv">
+        <span class="lbl" style="color:var(--gold-l)">Забронировать</span>
+        <div class="ornament" style="color:rgba(212,175,55,.5)">❖ ✦ ❖</div>
+        <h2 class="stitle light" style="font-size:clamp(1.9rem,5vw,3.1rem)">Забронируйте стол<br>прямо сейчас</h2>
+        <p class="bk-sub">Напишите в WhatsApp: количество гостей, дату и время — мы подтвердим за 10 минут</p>
+      </div>
+      <div class="bk-steps rv">
+        <div class="bk-step"><div class="bk-num">1</div><div class="bk-icon">💬</div><div class="bk-lbl">Напишите<br>в WhatsApp</div></div>
+        <div class="bk-arr">→</div>
+        <div class="bk-step"><div class="bk-num">2</div><div class="bk-icon">📅</div><div class="bk-lbl">Укажите дату,<br>время, гостей</div></div>
+        <div class="bk-arr">→</div>
+        <div class="bk-step"><div class="bk-num">3</div><div class="bk-icon">✅</div><div class="bk-lbl">Получите<br>подтверждение</div></div>
+      </div>
+      <div class="rv">
+        <a href="https://wa.me/77054567890" target="_blank" class="btn btn-gold" style="font-size:1rem;padding:17px 40px">
+          🍽 Забронировать стол в WhatsApp
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACTS -->
+<section id="contacts" class="sec">
+  <div class="wrap">
+    <div class="rv" style="text-align:center;margin-bottom:40px">
+      <span class="lbl">Где мы</span>
+      <div class="ornament">❖ ✦ ❖</div>
+      <h2 class="stitle">Адрес и контакты</h2>
+    </div>
+    <div class="ct-grid">
+      <div class="rv-l">
+        <div class="ct-list">
+          <div class="ct-item"><div class="ct-ico">📍</div><div><strong class="ct-lbl">Адрес</strong><span class="ct-val">ул. Панфилова 110<small>Рядом с Парком 28 Панфиловцев, г. Алматы</small></span></div></div>
+          <div class="ct-item"><div class="ct-ico">⏰</div><div><strong class="ct-lbl">Режим работы</strong><span class="ct-val">Ежедневно 11:00 – 23:00<small>Без перерывов и выходных</small></span></div></div>
+          <div class="ct-item"><div class="ct-ico">📞</div><div><strong class="ct-lbl">Телефон</strong><span class="ct-val"><a href="tel:+77054567890" style="color:var(--burg)">+7 (705) 456-78-90</a><small>Звонок или WhatsApp</small></span></div></div>
+          <div class="ct-item"><div class="ct-ico">🅿️</div><div><strong class="ct-lbl">Парковка</strong><span class="ct-val">Бесплатная, охраняемая<small>Рядом с рестораном</small></span></div></div>
+        </div>
+        <a href="https://wa.me/77054567890" target="_blank" class="btn btn-wa" style="margin-top:18px;width:100%;justify-content:center">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Написать в WhatsApp
+        </a>
+      </div>
+      <div class="rv-r">
+        <div class="map-ph">
+          <div class="map-grid-pat"></div>
+          <div class="map-mc mc1"></div><div class="map-mc mc2"></div>
+          <div class="map-body">
+            <span class="map-pin">📍</span>
+            <div class="map-t">Дастархан</div>
+            <div class="map-a">ул. Панфилова 110, Алматы</div>
+            <a href="#" class="map-btn-2gis">🗺 Открыть в 2GIS</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="footer">
+  <div class="wrap">
+    <div class="ft-in">
+      <div style="text-align:center">
+        <div class="ft-logo-name">🍽 Дастархан</div>
+        <div class="ft-slogan">Настоящая казахская кухня в центре Алматы</div>
+      </div>
+      <div class="ft-div"></div>
+      <div class="ft-socs">
+        <a href="#" class="ft-soc" aria-label="Instagram">📸</a>
+        <a href="https://wa.me/77054567890" target="_blank" class="ft-soc" aria-label="WhatsApp">💬</a>
+        <a href="#" class="ft-soc" aria-label="2GIS">🗺</a>
+      </div>
+      <div class="ft-orn">❖ &nbsp; ✦ &nbsp; ❖</div>
+      <div class="ft-copy">© 2025 Дастархан · Алматы · Все права защищены</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Navbar
+  const nav = document.getElementById('nav');
+  const burger = document.getElementById('burger');
+  const mob = document.getElementById('mobMenu');
+
+  window.addEventListener('scroll', () => nav.classList.toggle('sc', window.scrollY > 40), {passive:true});
+
+  burger.addEventListener('click', () => {
+    const open = mob.classList.toggle('open');
+    burger.classList.toggle('open', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  });
+
+  mob.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    mob.classList.remove('open');
+    burger.classList.remove('open');
+    document.body.style.overflow = '';
+  }));
+
+  // Active nav link
+  const sections = document.querySelectorAll('section[id]');
+  const navAs = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll', () => {
+    let cur = '';
+    sections.forEach(s => { if (window.scrollY >= s.offsetTop - 120) cur = s.id; });
+    navAs.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + cur));
+  }, {passive:true});
+
+  // Smooth scroll
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const t = document.querySelector(a.getAttribute('href'));
+      if (t) { e.preventDefault(); window.scrollTo({top: t.getBoundingClientRect().top + window.scrollY - parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nav')), behavior:'smooth'}); }
+    });
+  });
+
+  // Tabs
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const id = btn.dataset.tab;
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      const panel = document.getElementById('tab-' + id);
+      panel.classList.add('active');
+      panel.querySelectorAll('.rv').forEach((el, i) => {
+        el.classList.remove('on');
+        setTimeout(() => el.classList.add('on'), i * 60);
+      });
+    });
+  });
+
+  // Reveal
+  const rvEls = document.querySelectorAll('.rv, .rv-l, .rv-r');
+  document.querySelectorAll('#hero .rv').forEach((el, i) => setTimeout(() => el.classList.add('on'), i * 120 + 80));
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('on'); obs.unobserve(e.target); } });
+  }, {threshold:.1, rootMargin:'0px 0px -24px 0px'});
+  rvEls.forEach(el => { if (!el.closest('#hero')) obs.observe(el); });
+
+  // Stagger grids
+  document.querySelectorAll('.menu-grid, .gal-grid, .rvw-grid, .about-feats').forEach(g => {
+    g.querySelectorAll('.rv, .about-feat').forEach((el, i) => { el.style.transitionDelay = (i * .08) + 's'; });
+  });
+</script>
+</body>
+</html>

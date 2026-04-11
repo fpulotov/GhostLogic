@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Asel Beauty Studio — Салон красоты в Алматы</title>
+  <meta name="description" content="Asel Beauty Studio — стрижки, маникюр, брови и макияж в центре Алматы. Запись через WhatsApp за 1 минуту." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --cream:#FAF6F1;--warm-white:#FFFCF9;--blush:#E8C4B8;--blush-deep:#C9896F;
+      --rose:#B85C5C;--rose-dark:#8B3A3A;--gold:#C9A96E;--gold-light:#E8D5A3;
+      --dark:#1C1410;--gray:#6B5F58;--r:6px;--rl:16px;
+    }
+    html{scroll-behavior:smooth}
+    body{font-family:'DM Sans',sans-serif;color:var(--dark);background:var(--warm-white);line-height:1.6;overflow-x:hidden}
+    h1,h2,h3,h4{font-family:'Cormorant Garamond',serif;line-height:1.15}
+    a{text-decoration:none;color:inherit}
+    img{max-width:100%;display:block;width:100%}
+
+    /* Container */
+    .container{max-width:1200px;margin:0 auto;padding:0 20px}
+    @media(min-width:768px){.container{padding:0 40px}}
+    @media(min-width:1200px){.container{padding:0 48px}}
+
+    /* Section */
+    .section{padding:60px 0}
+    @media(min-width:768px){.section{padding:96px 0}}
+    @media(min-width:1024px){.section{padding:120px 0}}
+
+    /* Labels */
+    .lbl{font-size:11px;font-weight:500;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:12px;display:flex;align-items:center;gap:10px}
+    .lbl::before{content:'';width:24px;height:1px;background:var(--gold);flex-shrink:0}
+    .lbl-c{justify-content:center}.lbl-c::before{display:none}
+    .lbl-c::after{content:'';width:24px;height:1px;background:var(--gold);flex-shrink:0}
+
+    /* Titles */
+    .stitle{font-size:clamp(28px,7vw,50px);font-weight:600;line-height:1.1;color:var(--dark);margin-bottom:14px}
+    .stitle em{font-style:italic;font-weight:300;color:var(--rose)}
+    .ssub{font-size:15px;color:var(--gray);line-height:1.75;font-weight:300}
+    @media(min-width:768px){.ssub{font-size:16px}}
+    .sh{margin-bottom:40px}
+    @media(min-width:768px){.sh{margin-bottom:56px}}
+    .sh-c{text-align:center}.sh-c .ssub{max-width:460px;margin:0 auto}
+
+    /* Buttons */
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:15px 28px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;border:none;border-radius:var(--r);transition:all .3s;white-space:nowrap;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+    .btn-gold{background:var(--gold);color:var(--dark)}
+    .btn-gold:hover{filter:brightness(1.08);transform:translateY(-2px)}
+    .btn-gold:active{transform:scale(.97)}
+    .btn-ol-light{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.5)}
+    .btn-ol-light:active{background:rgba(255,255,255,.1)}
+    .btn-green{background:#25A96D;color:#fff}
+    .btn-green:hover{background:#1d8a57;transform:translateY(-2px)}
+    .btn-green:active{transform:scale(.97)}
+    .btn-full{width:100%;justify-content:center}
+
+    /* Reveal */
+    .rev{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease}
+    .rev.vis{opacity:1;transform:translateY(0)}
+    .rev-l{opacity:0;transform:translateX(-22px);transition:opacity .7s ease,transform .7s ease}
+    .rev-l.vis{opacity:1;transform:translateX(0)}
+    .rev-r{opacity:0;transform:translateX(22px);transition:opacity .7s ease,transform .7s ease}
+    .rev-r.vis{opacity:1;transform:translateX(0)}
+    .d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}.d4{transition-delay:.4s}
+
+    /* ===== NAVBAR ===== */
+    #nav{position:fixed;top:0;left:0;right:0;z-index:1000;transition:all .4s}
+    #nav.sc{background:rgba(255,252,249,.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(201,169,110,.2);box-shadow:0 2px 20px rgba(28,20,16,.06)}
+    .nav-in{display:flex;align-items:center;justify-content:space-between;height:62px;padding:0 20px}
+    @media(min-width:768px){.nav-in{height:70px;padding:0 40px}}
+    @media(min-width:1200px){.nav-in{height:78px;padding:0 48px}}
+    .nav-logo{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;letter-spacing:.04em;color:#fff;display:flex;align-items:center;gap:8px;transition:color .4s;flex-shrink:0}
+    @media(min-width:768px){.nav-logo{font-size:20px}}
+    #nav.sc .nav-logo{color:var(--dark)}
+    .nav-mark{width:26px;height:26px;border:1.5px solid currentColor;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-style:italic}
+    .nav-links{display:none;align-items:center;gap:32px;list-style:none}
+    @media(min-width:1024px){.nav-links{display:flex}}
+    .nav-links a{font-size:13px;font-weight:400;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.8);transition:color .3s}
+    #nav.sc .nav-links a{color:var(--gray)}
+    .nav-links a:hover{color:#fff}
+    #nav.sc .nav-links a:hover{color:var(--rose)}
+    .nav-cta-d{display:none}
+    @media(min-width:1024px){.nav-cta-d{display:block}}
+    .btn-nav{font-size:12px;letter-spacing:.1em;text-transform:uppercase;font-weight:500;padding:10px 20px;border:1.5px solid rgba(255,255,255,.6);color:#fff;border-radius:var(--r);transition:all .3s;background:transparent;display:inline-block}
+    #nav.sc .btn-nav{border-color:var(--rose);color:var(--rose)}
+    .btn-nav:hover{background:rgba(255,255,255,.12)}
+    #nav.sc .btn-nav:hover{background:var(--rose);color:#fff}
+    /* Burger */
+    .burger{display:flex;flex-direction:column;gap:5px;padding:8px;background:none;border:none;cursor:pointer;-webkit-tap-highlight-color:transparent}
+    @media(min-width:1024px){.burger{display:none}}
+    .burger span{display:block;width:22px;height:1.5px;background:#fff;transition:all .3s;border-radius:2px}
+    #nav.sc .burger span{background:var(--dark)}
+    .burger.open span:nth-child(1){transform:rotate(45deg) translate(4px,4px)}
+    .burger.open span:nth-child(2){opacity:0;width:0}
+    .burger.open span:nth-child(3){transform:rotate(-45deg) translate(4px,-4px)}
+    /* Mobile menu */
+    .mob-menu{position:fixed;top:62px;left:0;right:0;background:rgba(255,252,249,.99);backdrop-filter:blur(20px);z-index:999;padding:0 20px 24px;display:none;flex-direction:column;border-bottom:1px solid rgba(201,169,110,.15);box-shadow:0 8px 32px rgba(0,0,0,.08)}
+    @media(min-width:768px){.mob-menu{top:70px;padding:0 40px 32px}}
+    .mob-menu.open{display:flex}
+    .mob-link{padding:16px 0;font-size:17px;color:var(--dark);border-bottom:1px solid rgba(201,169,110,.1);transition:color .2s;-webkit-tap-highlight-color:transparent}
+    .mob-link:active{color:var(--rose)}
+    .mob-cta{margin-top:20px}
+    .mob-cta a{display:flex;align-items:center;justify-content:center;gap:8px;padding:16px;background:var(--rose);color:#fff;font-size:14px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;border-radius:var(--r);-webkit-tap-highlight-color:transparent}
+
+    /* ===== HERO ===== */
+    #hero{min-height:100svh;min-height:100vh;position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end}
+    .hero-bg{position:absolute;inset:0;background-image:url('https://images.unsplash.com/photo-1560066984-138dadb4c035?w=1200&q=80&fit=crop');background-size:cover;background-position:center top}
+    .hero-ov{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(28,20,16,.55) 0%,rgba(28,20,16,.40) 35%,rgba(28,20,16,.65) 65%,rgba(28,20,16,.90) 100%)}
+    .hero-ring{position:absolute;top:10%;right:-50px;width:220px;height:220px;border:1px solid rgba(201,169,110,.25);border-radius:50%;pointer-events:none}
+    @media(min-width:768px){.hero-ring{right:8%;width:340px;height:340px}}
+    .hero-ring-in{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:65%;height:65%;border:1px solid rgba(201,169,110,.12);border-radius:50%}
+    .hero-cnt{position:relative;z-index:2;padding:0 20px 44px}
+    @media(min-width:768px){.hero-cnt{padding:0 40px 64px}}
+    @media(min-width:1200px){.hero-cnt{padding:0 48px 80px;max-width:1200px;margin:0 auto;width:100%}}
+    .hero-tag{display:inline-flex;align-items:center;gap:10px;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:18px;text-shadow:0 1px 8px rgba(0,0,0,.5)}
+    .hero-tag-ln{width:28px;height:1px;background:var(--gold)}
+    .hero-title{font-size:clamp(42px,12vw,100px);font-weight:300;line-height:.95;color:#fff;margin-bottom:20px;letter-spacing:-.02em;text-shadow:0 2px 20px rgba(0,0,0,.4)}
+    .hero-title strong{font-weight:700;display:block}
+    .hero-title em{font-style:italic;font-weight:300;color:var(--gold-light)}
+    .hero-desc{font-size:15px;color:rgba(255,255,255,.88);max-width:340px;line-height:1.7;margin-bottom:26px;text-shadow:0 1px 8px rgba(0,0,0,.35)}
+    @media(min-width:768px){.hero-desc{font-size:16px;max-width:420px}}
+    .hero-btns{display:flex;flex-direction:column;gap:10px;margin-bottom:36px}
+    @media(min-width:480px){.hero-btns{flex-direction:row;flex-wrap:wrap}}
+    @media(max-width:479px){.hero-btns .btn{width:100%}}
+    .hero-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:1px solid rgba(255,255,255,.15);padding-top:20px}
+    .hero-si{text-align:center;padding:0 6px;border-right:1px solid rgba(255,255,255,.15)}
+    .hero-si:last-child{border-right:none}
+    .hero-sn{font-family:'Cormorant Garamond',serif;font-size:clamp(24px,6vw,38px);font-weight:600;color:#fff;display:block;line-height:1;margin-bottom:3px}
+    .hero-sl{font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.5)}
+    @media(min-width:768px){.hero-sl{font-size:11px}}
+
+    /* ===== MARQUEE ===== */
+    .marq{background:var(--rose);padding:11px 0;overflow:hidden}
+    .marq-track{display:flex;animation:marq 22s linear infinite;width:max-content}
+    .marq-item{display:flex;align-items:center;gap:14px;padding:0 18px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.9);white-space:nowrap}
+    .marq-dot{width:3px;height:3px;background:var(--gold-light);border-radius:50%;flex-shrink:0}
+    @keyframes marq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+    /* ===== ABOUT ===== */
+    #about{background:var(--cream)}
+    .about-in{display:grid;grid-template-columns:1fr;gap:36px}
+    @media(min-width:768px){.about-in{grid-template-columns:1fr 1fr;gap:56px;align-items:center}}
+    .about-vis{position:relative}
+    .about-img{border-radius:var(--rl);overflow:hidden;aspect-ratio:4/3;position:relative}
+    @media(min-width:768px){.about-img{aspect-ratio:3/4}}
+    .about-img img{width:100%;height:100%;object-fit:cover;object-position:center}
+    .about-badge{position:absolute;bottom:16px;right:16px;background:var(--dark);color:#fff;padding:14px 18px;border-radius:var(--r);text-align:center;border:3px solid var(--warm-white)}
+    .about-badge-n{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:600;display:block;color:var(--gold-light);line-height:1}
+    .about-badge-t{font-size:10px;letter-spacing:.1em;text-transform:uppercase;opacity:.7;margin-top:3px}
+    .about-vals{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:24px}
+    .about-val{padding:14px;background:var(--warm-white);border-radius:var(--r);border-left:3px solid var(--gold)}
+    .about-val-t{font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;color:var(--dark);margin-bottom:2px}
+    .about-val-s{font-size:12px;color:var(--gray);line-height:1.5}
+
+    /* ===== SERVICES ===== */
+    #services{background:var(--dark)}
+    .svcs-grid{display:grid;grid-template-columns:1fr;gap:1px;background:rgba(255,255,255,.05)}
+    @media(min-width:600px){.svcs-grid{grid-template-columns:1fr 1fr}}
+    @media(min-width:1024px){.svcs-grid{grid-template-columns:repeat(3,1fr)}}
+    .svc-card{background:var(--dark);padding:28px 22px;border:1px solid rgba(255,255,255,.05);transition:background .3s,border-color .3s;position:relative;overflow:hidden}
+    @media(min-width:768px){.svc-card{padding:36px 28px}}
+    .svc-card:hover{background:rgba(201,169,110,.05);border-color:rgba(201,169,110,.18)}
+    .svc-photo{width:100%;height:160px;border-radius:var(--r);overflow:hidden;margin-bottom:18px}
+    @media(min-width:768px){.svc-photo{height:180px}}
+    .svc-photo img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+    .svc-card:hover .svc-photo img{transform:scale(1.06)}
+    .svc-num{font-family:'Cormorant Garamond',serif;font-size:11px;font-weight:600;color:var(--gold);letter-spacing:.15em;margin-bottom:10px;display:block}
+    .svc-icon{font-size:26px;margin-bottom:10px;display:block}
+    .svc-name{font-family:'Cormorant Garamond',serif;font-size:21px;font-weight:600;color:var(--warm-white);margin-bottom:8px}
+    .svc-desc{font-size:13px;color:rgba(255,255,255,.4);line-height:1.6;margin-bottom:18px}
+    .svc-price{display:flex;align-items:baseline;gap:5px}
+    .svc-pv{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:600;color:var(--gold)}
+    .svc-pl{font-size:11px;color:rgba(255,255,255,.3)}
+    .svcs-ft{padding:28px 0 0;border-top:1px solid rgba(255,255,255,.07);margin-top:1px;display:flex;flex-direction:column;gap:14px}
+    @media(min-width:600px){.svcs-ft{flex-direction:row;align-items:center;justify-content:space-between}}
+    .svcs-ft-t{font-size:14px;color:rgba(255,255,255,.35)}
+
+    /* ===== MASTERS ===== */
+    #masters{background:var(--cream)}
+    .mstrs-grid{display:grid;grid-template-columns:1fr;gap:20px}
+    @media(min-width:600px){.mstrs-grid{grid-template-columns:repeat(2,1fr)}}
+    @media(min-width:1024px){.mstrs-grid{grid-template-columns:repeat(3,1fr);gap:28px}}
+    .mstr-card{background:var(--warm-white);border-radius:var(--rl);overflow:hidden;border:1px solid rgba(201,169,110,.12);transition:transform .35s,box-shadow .35s}
+    @media(min-width:768px){.mstr-card:hover{transform:translateY(-6px);box-shadow:0 20px 50px rgba(184,92,92,.1)}}
+    .mstr-photo{height:220px;position:relative;overflow:hidden}
+    .mstr-photo::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(28,20,16,.45) 0%,transparent 45%);pointer-events:none}
+    @media(min-width:768px){.mstr-photo{height:250px}}
+    .mstr-photo img{width:100%;height:100%;object-fit:cover;object-position:center top;transition:transform .5s}
+    .mstr-card:hover .mstr-photo img{transform:scale(1.05)}
+    .mstr-ph-fb{width:100%;height:100%;display:flex;align-items:center;justify-content:center;position:relative}
+    .mstr-bg-a{background:linear-gradient(160deg,#C9896F,#8B3A3A)}
+    .mstr-bg-d{background:linear-gradient(160deg,#C9A96E,#8B6A2A)}
+    .mstr-bg-s{background:linear-gradient(160deg,#8A7FC9,#3A3A8B)}
+    .mstr-pat{position:absolute;inset:0;opacity:.06;background-image:radial-gradient(circle at 2px 2px,rgba(255,255,255,.9) 1px,transparent 0);background-size:20px 20px}
+    .mstr-mono{font-family:'Cormorant Garamond',serif;font-size:64px;font-weight:700;color:rgba(255,255,255,.9);line-height:1;position:relative;z-index:1}
+    .mstr-body{padding:22px 22px 26px}
+    .mstr-name{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:var(--dark);margin-bottom:2px}
+    .mstr-role{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--rose);margin-bottom:2px}
+    .mstr-exp{font-size:13px;color:var(--gray);margin-bottom:14px}
+    .mstr-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:18px}
+    .mstr-tag{padding:4px 10px;font-size:11px;border:1px solid var(--blush);color:var(--blush-deep);border-radius:var(--r)}
+    .mstr-btn{display:block;width:100%;text-align:center;padding:13px;font-size:12px;letter-spacing:.09em;text-transform:uppercase;font-weight:500;border:1.5px solid var(--rose);color:var(--rose);border-radius:var(--r);transition:all .3s;background:transparent;-webkit-tap-highlight-color:transparent}
+    .mstr-btn:active,.mstr-btn:hover{background:var(--rose);color:#fff}
+
+    /* ===== GALLERY ===== */
+    #gallery{background:var(--warm-white)}
+    .gal-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+    @media(min-width:768px){.gal-grid{grid-template-columns:repeat(3,1fr);gap:14px}}
+    .gal-item{border-radius:var(--rl);overflow:hidden;position:relative;aspect-ratio:3/4}
+    .gal-item:first-child{grid-column:1/-1;aspect-ratio:16/9}
+    @media(min-width:768px){.gal-item{aspect-ratio:4/3}.gal-item:first-child{grid-column:1/3;aspect-ratio:4/3}}
+    .gal-item img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+    .gal-item:hover img{transform:scale(1.06)}
+    .gal-ov{position:absolute;inset:0;background:linear-gradient(to top,rgba(28,20,16,.88) 0%,rgba(28,20,16,.4) 45%,transparent 72%);display:flex;align-items:flex-end;padding:16px;opacity:1;transition:opacity .3s}
+    .gal-item:hover .gal-ov{opacity:1}
+    .gal-lb{font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:600;color:#fff;text-shadow:0 1px 6px rgba(0,0,0,.6)}
+    .gal-sb{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.82);margin-top:2px;text-shadow:0 1px 4px rgba(0,0,0,.5)}
+
+    /* ===== PROMO ===== */
+    .promo{background:var(--rose);padding:44px 0;position:relative;overflow:hidden}
+    @media(min-width:768px){.promo{padding:60px 0}}
+    .promo-deco{position:absolute;top:-60px;right:-60px;width:240px;height:240px;border:1px solid rgba(255,255,255,.12);border-radius:50%;pointer-events:none}
+    .promo-in{display:flex;flex-direction:column;gap:24px;position:relative;z-index:1}
+    @media(min-width:768px){.promo-in{flex-direction:row;align-items:center;justify-content:space-between;gap:40px}}
+    .promo-pre{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-light);margin-bottom:8px}
+    .promo-ttl{font-family:'Cormorant Garamond',serif;font-size:clamp(26px,6vw,46px);font-weight:600;color:#fff;line-height:1.1;margin-bottom:6px}
+    .promo-sub{font-size:14px;color:rgba(255,255,255,.65)}
+    .promo-cta .btn{width:100%}
+    @media(min-width:768px){.promo-cta .btn{width:auto;white-space:nowrap}}
+
+    /* ===== REVIEWS ===== */
+    #reviews{background:var(--cream)}
+    .rvw-grid{display:grid;grid-template-columns:1fr;gap:14px}
+    @media(min-width:600px){.rvw-grid{grid-template-columns:repeat(2,1fr)}}
+    @media(min-width:1024px){.rvw-grid{grid-template-columns:repeat(3,1fr);gap:22px}}
+    .rvw-card{background:var(--warm-white);border-radius:var(--rl);padding:26px 22px;border:1px solid rgba(201,169,110,.1);transition:transform .3s,box-shadow .3s}
+    @media(min-width:768px){.rvw-card:hover{transform:translateY(-4px);box-shadow:0 14px 36px rgba(184,92,92,.08)}}
+    .rvw-q{font-family:'Cormorant Garamond',serif;font-size:56px;line-height:.8;color:var(--gold);opacity:.35;margin-bottom:10px;display:block}
+    .rvw-stars{display:flex;gap:3px;margin-bottom:12px}
+    .star{width:11px;height:11px;background:var(--gold);clip-path:polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%)}
+    .rvw-txt{font-family:'Cormorant Garamond',serif;font-size:16px;color:var(--gray);line-height:1.7;margin-bottom:20px;font-style:italic}
+    .rvw-auth{display:flex;align-items:center;gap:12px;padding-top:18px;border-top:1px solid rgba(201,169,110,.1)}
+    .rvw-av{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:700;color:#fff;flex-shrink:0}
+    .ra1{background:linear-gradient(135deg,#C9896F,#8B3A3A)}
+    .ra2{background:linear-gradient(135deg,#C9A96E,#7A5A1E)}
+    .ra3{background:linear-gradient(135deg,#8A7FC9,#3A3A8B)}
+    .rvw-name{font-size:14px;font-weight:600;color:var(--dark)}
+    .rvw-date{font-size:12px;color:var(--gray);margin-top:1px}
+
+    /* ===== CONTACTS ===== */
+    #contacts{background:var(--dark);position:relative;overflow:hidden}
+    .ct-deco{position:absolute;top:-60px;right:-60px;width:300px;height:300px;border:1px solid rgba(201,169,110,.08);border-radius:50%;pointer-events:none}
+    .ct-in{display:grid;grid-template-columns:1fr;gap:36px;position:relative;z-index:1}
+    @media(min-width:768px){.ct-in{grid-template-columns:1fr 1fr;gap:56px;align-items:start}}
+    .ct-items{display:flex;flex-direction:column}
+    .ct-item{display:flex;align-items:flex-start;gap:14px;padding:18px 0;border-bottom:1px solid rgba(255,255,255,.06)}
+    .ct-item:first-child{padding-top:0}
+    .ct-ico{width:38px;height:38px;border:1px solid rgba(201,169,110,.3);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+    .ct-lbl{font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:3px}
+    .ct-val{font-size:14px;color:rgba(255,255,255,.65);line-height:1.6}
+    .ct-val a{color:rgba(255,255,255,.65);transition:color .2s}
+    .ct-val a:hover{color:var(--gold)}
+    .ct-wa{margin-top:24px}
+    .map-ph{background:rgba(255,255,255,.04);border:1px solid rgba(201,169,110,.14);border-radius:var(--rl);padding:36px 20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;min-height:260px}
+    .map-pin{font-size:36px}
+    .map-t{font-family:'Cormorant Garamond',serif;font-size:19px;color:var(--warm-white)}
+    .map-s{font-size:13px;color:rgba(255,255,255,.38);line-height:1.6}
+    .map-btn a{display:inline-flex;align-items:center;gap:7px;padding:11px 18px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;border:1px solid rgba(201,169,110,.3);color:var(--gold);border-radius:var(--r);margin-top:6px;transition:background .3s}
+    .map-btn a:hover{background:rgba(201,169,110,.1)}
+
+    /* ===== FOOTER ===== */
+    footer{background:#0F0A08;padding:36px 0}
+    .ft-in{display:flex;flex-direction:column;align-items:center;gap:20px}
+    .ft-top{display:flex;flex-direction:column;align-items:center;gap:14px;width:100%}
+    @media(min-width:768px){.ft-top{flex-direction:row;justify-content:space-between}}
+    .ft-logo{font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:600;color:var(--warm-white);letter-spacing:.04em;display:flex;align-items:center;gap:8px}
+    .ft-mark{width:26px;height:26px;border:1.5px solid var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-style:italic;color:var(--gold)}
+    .ft-socs{display:flex;gap:10px}
+    .ft-soc{width:38px;height:38px;border:1px solid rgba(255,255,255,.1);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;color:rgba(255,255,255,.4);transition:all .3s;-webkit-tap-highlight-color:transparent}
+    .ft-soc:active,.ft-soc:hover{border-color:var(--gold);color:var(--gold)}
+    .ft-div{width:100%;height:1px;background:rgba(255,255,255,.06)}
+    .ft-copy{font-size:12px;color:rgba(255,255,255,.18);text-align:center}
+
+    /* ===== FLOATING WA ===== */
+    .wa-fl{position:fixed;bottom:20px;right:16px;width:50px;height:50px;background:#25A96D;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;z-index:900;box-shadow:0 6px 18px rgba(37,169,109,.45);transition:transform .3s;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+    @media(min-width:768px){.wa-fl{bottom:28px;right:28px;width:54px;height:54px}}
+    .wa-fl:active{transform:scale(.94)}
+    .wa-fl:hover{transform:scale(1.08)}
+  </style>
+</head>
+<body>
+
+  <!-- Floating WA -->
+  <a href="https://wa.me/77012345678" target="_blank" rel="noopener" class="wa-fl" aria-label="WhatsApp">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  </a>
+
+  <!-- NAVBAR -->
+  <nav id="nav">
+    <div class="nav-in">
+      <a href="#hero" class="nav-logo"><div class="nav-mark">A</div>Asel Beauty</a>
+      <ul class="nav-links">
+        <li><a href="#services">Услуги</a></li>
+        <li><a href="#masters">Мастера</a></li>
+        <li><a href="#gallery">Работы</a></li>
+        <li><a href="#reviews">Отзывы</a></li>
+        <li><a href="#contacts">Контакты</a></li>
+      </ul>
+      <div class="nav-cta-d"><a href="https://wa.me/77012345678" target="_blank" class="btn-nav">Записаться</a></div>
+      <button class="burger" id="burgerBtn" aria-label="Меню"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <div class="mob-menu" id="mobMenu">
+    <a href="#services" class="mob-link">Услуги</a>
+    <a href="#masters" class="mob-link">Мастера</a>
+    <a href="#gallery" class="mob-link">Работы</a>
+    <a href="#reviews" class="mob-link">Отзывы</a>
+    <a href="#contacts" class="mob-link">Контакты</a>
+    <div class="mob-cta">
+      <a href="https://wa.me/77012345678" target="_blank" rel="noopener">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Записаться в WhatsApp
+      </a>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-ov"></div>
+    <div class="hero-ring"><div class="hero-ring-in"></div></div>
+    <div class="hero-cnt rev">
+      <div class="hero-tag"><span class="hero-tag-ln"></span>Салон красоты · Алматы</div>
+      <h1 class="hero-title"><em>Где рождается</em><strong>Красота</strong></h1>
+      <p class="hero-desc">Профессиональный уход, современные техники и мастера с душой — всё это в центре Алматы.</p>
+      <div class="hero-btns">
+        <a href="https://wa.me/77012345678" target="_blank" rel="noopener" class="btn btn-gold">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Записаться сейчас
+        </a>
+        <a href="#services" class="btn btn-ol-light">Наши услуги</a>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-si"><span class="hero-sn">1200+</span><div class="hero-sl">Клиентов</div></div>
+        <div class="hero-si"><span class="hero-sn">8 лет</span><div class="hero-sl">На рынке</div></div>
+        <div class="hero-si"><span class="hero-sn">4.9★</span><div class="hero-sl">Рейтинг</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marq">
+    <div class="marq-track">
+      <div class="marq-item"><div class="marq-dot"></div>Стрижки и укладки</div>
+      <div class="marq-item"><div class="marq-dot"></div>Маникюр и педикюр</div>
+      <div class="marq-item"><div class="marq-dot"></div>Коррекция бровей</div>
+      <div class="marq-item"><div class="marq-dot"></div>Профессиональный макияж</div>
+      <div class="marq-item"><div class="marq-dot"></div>Ламинирование ресниц</div>
+      <div class="marq-item"><div class="marq-dot"></div>Спа-уход</div>
+      <div class="marq-item"><div class="marq-dot"></div>Стрижки и укладки</div>
+      <div class="marq-item"><div class="marq-dot"></div>Маникюр и педикюр</div>
+      <div class="marq-item"><div class="marq-dot"></div>Коррекция бровей</div>
+      <div class="marq-item"><div class="marq-dot"></div>Профессиональный макияж</div>
+      <div class="marq-item"><div class="marq-dot"></div>Ламинирование ресниц</div>
+      <div class="marq-item"><div class="marq-dot"></div>Спа-уход</div>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <section id="about" class="section">
+    <div class="container">
+      <div class="about-in">
+        <div class="about-vis rev-l">
+          <div class="about-img">
+            <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=800&q=80&fit=crop&crop=center" alt="Интерьер салона красоты" loading="lazy"/>
+            <div class="about-badge"><span class="about-badge-n">8</span><div class="about-badge-t">лет опыта</div></div>
+          </div>
+        </div>
+        <div class="rev-r">
+          <div class="lbl">О нас</div>
+          <h2 class="stitle">Искусство<br><em>красоты</em></h2>
+          <p class="ssub">Asel Beauty Studio — это место, где каждая клиентка становится главным героем. Мы работаем по принципу: внимание к деталям, уважение к времени, любовь к своему делу.</p>
+          <div class="about-vals">
+            <div class="about-val"><div class="about-val-t">Качество</div><div class="about-val-s">Только проверенные материалы</div></div>
+            <div class="about-val"><div class="about-val-t">Комфорт</div><div class="about-val-s">Уютная атмосфера</div></div>
+            <div class="about-val"><div class="about-val-t">Результат</div><div class="about-val-s">До полного удовлетворения</div></div>
+            <div class="about-val"><div class="about-val-t">Доверие</div><div class="about-val-s">1200+ постоянных клиентов</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services" class="section">
+    <div class="container">
+      <div class="sh">
+        <div class="lbl rev" style="color:var(--gold)">Услуги</div>
+        <h2 class="stitle rev d1" style="color:var(--warm-white)">Всё для<br><em style="color:var(--gold-light)">вашей красоты</em></h2>
+        <p class="ssub rev d2" style="color:rgba(255,255,255,.45)">Профессиональный уход в каждой услуге</p>
+      </div>
+      <div class="svcs-grid">
+        <div class="svc-card rev">
+          <div class="svc-photo"><img src="https://images.unsplash.com/photo-1562322140-8baeececf3df?w=600&q=75&fit=crop&crop=center" alt="Стрижки" loading="lazy"/></div>
+          <span class="svc-num">01</span><span class="svc-icon">✂️</span>
+          <div class="svc-name">Стрижки & Укладки</div>
+          <p class="svc-desc">Авторские стрижки, профессиональное окрашивание и укладка для любого типа волос.</p>
+          <div class="svc-price"><span class="svc-pv">от 3 500 ₸</span><span class="svc-pl">/ сеанс</span></div>
+        </div>
+        <div class="svc-card rev d1">
+          <div class="svc-photo"><img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?w=600&q=75&fit=crop&crop=center" alt="Маникюр" loading="lazy"/></div>
+          <span class="svc-num">02</span><span class="svc-icon">💅</span>
+          <div class="svc-name">Маникюр & Педикюр</div>
+          <p class="svc-desc">Классический, аппаратный, гель-лак — ваши руки в надёжных руках наших мастеров.</p>
+          <div class="svc-price"><span class="svc-pv">от 4 000 ₸</span><span class="svc-pl">/ сеанс</span></div>
+        </div>
+        <div class="svc-card rev d2">
+          <div class="svc-photo"><img src="https://images.unsplash.com/photo-1515688594390-b649af70d282?w=600&q=75&fit=crop&crop=faces" alt="Брови" loading="lazy"/></div>
+          <span class="svc-num">03</span><span class="svc-icon">👁️</span>
+          <div class="svc-name">Брови & Ресницы</div>
+          <p class="svc-desc">Архитектура бровей, ламинирование, долговременная укладка и наращивание ресниц.</p>
+          <div class="svc-price"><span class="svc-pv">от 2 500 ₸</span><span class="svc-pl">/ сеанс</span></div>
+        </div>
+        <div class="svc-card rev d1">
+          <div class="svc-photo"><img src="https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=600&q=75&fit=crop&crop=faces" alt="Макияж" loading="lazy"/></div>
+          <span class="svc-num">04</span><span class="svc-icon">💄</span>
+          <div class="svc-name">Макияж</div>
+          <p class="svc-desc">Дневной, вечерний, свадебный макияж. Профессиональные техники для любого случая.</p>
+          <div class="svc-price"><span class="svc-pv">от 8 000 ₸</span><span class="svc-pl">/ сеанс</span></div>
+        </div>
+        <div class="svc-card rev d2">
+          <div class="svc-photo"><img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=600&q=75&fit=crop&crop=center" alt="Уход за лицом" loading="lazy"/></div>
+          <span class="svc-num">05</span><span class="svc-icon">✨</span>
+          <div class="svc-name">Уход за лицом</div>
+          <p class="svc-desc">Глубокое очищение, гидратация и anti-age процедуры для сияющей кожи.</p>
+          <div class="svc-price"><span class="svc-pv">от 6 000 ₸</span><span class="svc-pl">/ сеанс</span></div>
+        </div>
+        <div class="svc-card rev d3">
+          <div class="svc-photo"><img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=600&q=75&fit=crop&crop=center" alt="Спа" loading="lazy"/></div>
+          <span class="svc-num">06</span><span class="svc-icon">🌿</span>
+          <div class="svc-name">Спа-уход</div>
+          <p class="svc-desc">Расслабляющие процедуры, парафинотерапия, обёртывания и массаж.</p>
+          <div class="svc-price"><span class="svc-pv">от 5 500 ₸</span><span class="svc-pl">/ сеанс</span></div>
+        </div>
+      </div>
+      <div class="svcs-ft rev">
+        <span class="svcs-ft-t">Нужна консультация? Напишите нам.</span>
+        <a href="https://wa.me/77012345678" target="_blank" rel="noopener" class="btn btn-gold btn-full">Записаться через WhatsApp</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- MASTERS -->
+  <section id="masters" class="section">
+    <div class="container">
+      <div class="sh sh-c">
+        <div class="lbl lbl-c rev">Команда</div>
+        <h2 class="stitle rev d1">Наши <em>мастера</em></h2>
+        <p class="ssub rev d2">Профессионалы с душой — каждый постоянно развивается</p>
+      </div>
+      <div class="mstrs-grid">
+        <div class="mstr-card rev">
+          <div class="mstr-photo">
+            <img src="https://images.unsplash.com/photo-1580618672591-eb180b1a973f?w=600&q=80&fit=crop&crop=faces,top" alt="Асель — топ-стилист" loading="lazy"
+              onerror="this.style.display='none';this.parentNode.innerHTML+='<div class=\'mstr-ph-fb mstr-bg-a\'><div class=\'mstr-pat\'></div><div class=\'mstr-mono\'>А</div></div>'"/>
+          </div>
+          <div class="mstr-body">
+            <div class="mstr-name">Асель Нурова</div>
+            <div class="mstr-role">Топ-стилист</div>
+            <div class="mstr-exp">7 лет опыта</div>
+            <div class="mstr-tags"><span class="mstr-tag">Стрижки</span><span class="mstr-tag">Окрашивание</span><span class="mstr-tag">Укладки</span></div>
+            <a href="https://wa.me/77012345678" target="_blank" rel="noopener" class="mstr-btn">Записаться к Асель</a>
+          </div>
+        </div>
+        <div class="mstr-card rev d1">
+          <div class="mstr-photo">
+            <img src="https://images.unsplash.com/photo-1607779097040-26e80aa78e66?w=600&q=80&fit=crop&crop=faces,top" alt="Динара — nail-мастер" loading="lazy"
+              onerror="this.style.display='none';this.parentNode.innerHTML+='<div class=\'mstr-ph-fb mstr-bg-d\'><div class=\'mstr-pat\'></div><div class=\'mstr-mono\'>Д</div></div>'"/>
+          </div>
+          <div class="mstr-body">
+            <div class="mstr-name">Динара Касымова</div>
+            <div class="mstr-role">Nail-мастер</div>
+            <div class="mstr-exp">5 лет опыта</div>
+            <div class="mstr-tags"><span class="mstr-tag">Маникюр</span><span class="mstr-tag">Педикюр</span><span class="mstr-tag">Гель-лак</span></div>
+            <a href="https://wa.me/77012345678" target="_blank" rel="noopener" class="mstr-btn">Записаться к Динаре</a>
+          </div>
+        </div>
+        <div class="mstr-card rev d2">
+          <div class="mstr-photo">
+            <img src="https://images.unsplash.com/photo-1614608682850-e0d6ed316d47?w=600&q=80&fit=crop&crop=faces,top" alt="Сауле — бровист" loading="lazy"
+              onerror="this.style.display='none';this.parentNode.innerHTML+='<div class=\'mstr-ph-fb mstr-bg-s\'><div class=\'mstr-pat\'></div><div class=\'mstr-mono\'>С</div></div>'"/>
+          </div>
+          <div class="mstr-body">
+            <div class="mstr-name">Сауле Бекова</div>
+            <div class="mstr-role">Бровист & Визажист</div>
+            <div class="mstr-exp">6 лет опыта</div>
+            <div class="mstr-tags"><span class="mstr-tag">Брови</span><span class="mstr-tag">Ресницы</span><span class="mstr-tag">Макияж</span></div>
+            <a href="https://wa.me/77012345udio" target="_blank" rel="noopener" class="mstr-btn">Записаться к Сауле</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section id="gallery" class="section">
+    <div class="container">
+      <div class="sh">
+        <div class="lbl rev">Портфолио</div>
+        <h2 class="stitle rev d1">Наши <em>работы</em></h2>
+      </div>
+      <div class="gal-grid">
+        <div class="gal-item rev">
+          <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?w=900&q=80&fit=crop&crop=center" alt="Стрижки и укладки" loading="lazy"/>
+          <div class="gal-ov"><div><div class="gal-lb">Стрижки & Укладки</div><div class="gal-sb">Авторские техники</div></div></div>
+        </div>
+        <div class="gal-item rev d1">
+          <img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?w=600&q=80&fit=crop&crop=center" alt="Маникюр" loading="lazy"/>
+          <div class="gal-ov"><div><div class="gal-lb">Маникюр</div><div class="gal-sb">Гель и акрил</div></div></div>
+        </div>
+        <div class="gal-item rev d2">
+          <img src="https://images.unsplash.com/photo-1487412947147-5cebf100ffc2?w=600&q=80&fit=crop&crop=faces" alt="Макияж" loading="lazy"/>
+          <div class="gal-ov"><div><div class="gal-lb">Макияж</div><div class="gal-sb">Вечер и свадьба</div></div></div>
+        </div>
+        <div class="gal-item rev d1">
+          <img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=600&q=80&fit=crop&crop=center" alt="Уход за лицом" loading="lazy"/>
+          <div class="gal-ov"><div><div class="gal-lb">Уход за лицом</div><div class="gal-sb">Процедуры</div></div></div>
+        </div>
+        <div class="gal-item rev d2">
+          <img src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=600&q=80&fit=crop&crop=center" alt="Интерьер салона" loading="lazy"/>
+          <div class="gal-ov"><div><div class="gal-lb">Наш салон</div><div class="gal-sb">Интерьер</div></div></div>
+        </div>
+        <div class="gal-item rev d3">
+          <img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=600&q=80&fit=crop&crop=center" alt="Спа" loading="lazy"/>
+          <div class="gal-ov"><div><div class="gal-lb">Спа & Уход</div><div class="gal-sb">Расслабление</div></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROMO -->
+  <div class="promo">
+    <div class="promo-deco"></div>
+    <div class="container">
+      <div class="promo-in">
+        <div class="rev">
+          <div class="promo-pre">Специальное предложение</div>
+          <h3 class="promo-ttl">Первый визит —<br>скидка 20%</h3>
+          <p class="promo-sub">Для новых клиентов при записи через WhatsApp</p>
+        </div>
+        <div class="promo-cta rev d2">
+          <a href="https://wa.me/77012345678" target="_blank" rel="noopener" class="btn btn-gold">Воспользоваться →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- REVIEWS -->
+  <section id="reviews" class="section">
+    <div class="container">
+      <div class="sh sh-c">
+        <div class="lbl lbl-c rev">Отзывы</div>
+        <h2 class="stitle rev d1">Что говорят <em>клиенты</em></h2>
+      </div>
+      <div class="rvw-grid">
+        <div class="rvw-card rev">
+          <span class="rvw-q">"</span>
+          <div class="rvw-stars"><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div></div>
+          <p class="rvw-txt">Асель — настоящий профессионал! Сделала именно то, о чём я мечтала. Стрижка идеально подходит к форме лица, атмосфера в студии очень приятная.</p>
+          <div class="rvw-auth"><div class="rvw-av ra1">А</div><div><div class="rvw-name">Алия Сейткали</div><div class="rvw-date">Март 2025</div></div></div>
+        </div>
+        <div class="rvw-card rev d1">
+          <span class="rvw-q">"</span>
+          <div class="rvw-stars"><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div></div>
+          <p class="rvw-txt">Маникюр держится уже 4 недели — это рекорд для меня! Динара очень аккуратная, педантичная в работе. Буду возвращаться только сюда.</p>
+          <div class="rvw-auth"><div class="rvw-av ra2">М</div><div><div class="rvw-name">Мадина Жакупова</div><div class="rvw-date">Февраль 2025</div></div></div>
+        </div>
+        <div class="rvw-card rev d2">
+          <span class="rvw-q">"</span>
+          <div class="rvw-stars"><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div></div>
+          <p class="rvw-txt">Записалась на макияж к Сауле на свадьбу подруги. Результат превзошёл все ожидания — выглядела потрясающе весь вечер. Спасибо огромное!</p>
+          <div class="rvw-auth"><div class="rvw-av ra3">З</div><div><div class="rvw-name">Зарина Нурланова</div><div class="rvw-date">Январь 2025</div></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACTS -->
+  <section id="contacts" class="section">
+    <div class="ct-deco"></div>
+    <div class="container">
+      <div class="sh">
+        <div class="lbl rev" style="color:var(--gold)">Контакты</div>
+        <h2 class="stitle rev d1" style="color:var(--warm-white)">Как нас <em style="color:var(--gold-light)">найти</em></h2>
+        <p class="ssub rev d2" style="color:rgba(255,255,255,.45)">Ждём вас в центре Алматы</p>
+      </div>
+      <div class="ct-in">
+        <div class="ct-items rev-l">
+          <div class="ct-item"><div class="ct-ico">📍</div><div><div class="ct-lbl">Адрес</div><div class="ct-val">г. Алматы, ул. Абая 14<br>ТЦ «Алматы Молл», 2 этаж</div></div></div>
+          <div class="ct-item"><div class="ct-ico">🕐</div><div><div class="ct-lbl">Режим работы</div><div class="ct-val">Пн–Пт: 9:00–20:00<br>Сб–Вс: 10:00–19:00</div></div></div>
+          <div class="ct-item"><div class="ct-ico">📞</div><div><div class="ct-lbl">Телефон</div><div class="ct-val"><a href="tel:+77012345678">+7 (701) 234-56-78</a></div></div></div>
+          <div class="ct-item"><div class="ct-ico">💬</div><div><div class="ct-lbl">WhatsApp</div><div class="ct-val"><a href="https://wa.me/77012345678" target="_blank">@aselbeautystudio</a></div></div></div>
+          <div class="ct-wa">
+            <a href="https://wa.me/77012345678" target="_blank" rel="noopener" class="btn btn-green btn-full">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+              Написать в WhatsApp
+            </a>
+          </div>
+        </div>
+        <div class="rev-r">
+          <div class="map-ph">
+            <div class="map-pin">📍</div>
+            <div class="map-t">Мы на карте — 2GIS</div>
+            <div class="map-s">г. Алматы, ул. Абая 14<br>ТЦ «Алматы Молл», 2 этаж</div>
+            <div class="map-btn"><a href="https://2gis.kz" target="_blank" rel="noopener">🗺️ Открыть в 2GIS</a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="ft-in">
+        <div class="ft-top">
+          <div class="ft-logo"><div class="ft-mark">A</div>Asel Beauty Studio</div>
+          <div class="ft-socs">
+            <a href="https://instagram.com" target="_blank" class="ft-soc" aria-label="Instagram">📷</a>
+            <a href="https://wa.me/77012345678" target="_blank" class="ft-soc" aria-label="WhatsApp">💬</a>
+            <a href="https://2gis.kz" target="_blank" class="ft-soc" aria-label="2GIS">🗺️</a>
+          </div>
+        </div>
+        <div class="ft-div"></div>
+        <div class="ft-copy">© 2025 Asel Beauty Studio · Алматы · Все права защищены</div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Navbar
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => nav.classList.toggle('sc', window.scrollY > 50), {passive:true});
+
+    // Burger
+    const burger = document.getElementById('burgerBtn');
+    const mob = document.getElementById('mobMenu');
+    burger.addEventListener('click', () => {
+      burger.classList.toggle('open');
+      mob.classList.toggle('open');
+      document.body.style.overflow = mob.classList.contains('open') ? 'hidden' : '';
+    });
+    document.querySelectorAll('.mob-link, .mob-cta a').forEach(l => l.addEventListener('click', () => {
+      burger.classList.remove('open'); mob.classList.remove('open'); document.body.style.overflow = '';
+    }));
+
+    // Smooth scroll
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', function(e) {
+        const id = this.getAttribute('href');
+        if (id === '#') return;
+        const t = document.querySelector(id);
+        if (t) { e.preventDefault(); window.scrollTo({top: t.getBoundingClientRect().top + window.scrollY - nav.offsetHeight, behavior:'smooth'}); }
+      });
+    });
+
+    // Reveal
+    const revEls = document.querySelectorAll('.rev, .rev-l, .rev-r');
+    document.querySelectorAll('#hero .rev').forEach((el, i) => setTimeout(() => el.classList.add('vis'), i * 140 + 80));
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('vis'); obs.unobserve(e.target); } });
+    }, {threshold:0.07, rootMargin:'0px 0px -24px 0px'});
+    revEls.forEach(el => { if (!el.closest('#hero')) obs.observe(el); });
+
+    // Stagger grids
+    ['.svc-card', '.mstr-card', '.gal-item', '.rvw-card'].forEach(s => {
+      const cards = document.querySelectorAll(s);
+      const go = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            setTimeout(() => e.target.classList.add('vis'), Array.from(cards).indexOf(e.target) * 80);
+            go.unobserve(e.target);
+          }
+        });
+      }, {threshold:0.05});
+      cards.forEach(c => go.observe(c));
+    });
+  </script>
+</body>
+</html>
