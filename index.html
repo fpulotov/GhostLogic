@@ -41,6 +41,11 @@ h1,h2,h3,h4{letter-spacing:-.02em;}
 .btn-outline{display:flex;align-items:center;justify-content:center;gap:8px;border:2px solid var(--navy);color:var(--navy);font-weight:700;font-size:.95rem;padding:13px 20px;border-radius:12px;transition:background .2s,color .2s;background:transparent;cursor:pointer;}
 .btn-outline:active{background:var(--navy);color:#fff;}
 
+.nav-links-d{display:none;align-items:center;gap:4px;}
+.nav-links-d a{font-size:.8rem;font-weight:700;color:var(--txt2);padding:7px 11px;border-radius:8px;transition:color .2s,background .2s;}
+.nav-links-d a:hover{color:var(--navy);background:var(--navy-bg);}
+@media(min-width:720px){.nav-links-d{display:flex;}}
+
 /* NAV */
 nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(247,248,252,.96);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);}
 .nav-in{display:flex;align-items:center;justify-content:space-between;padding:11px 16px;}
@@ -257,6 +262,12 @@ footer{background:var(--navy);padding:24px 16px;padding-bottom:calc(24px + env(s
       <img src="images/logo.png" alt="GhostLogic"/>
       <span class="brand-name">Ghost<span>Logic</span></span>
     </a>
+    <div class="nav-links-d">
+      <a href="#portfolio">Примеры</a>
+      <a href="#includes">Цена</a>
+      <a href="#process">Процесс</a>
+      <a href="#faq">FAQ</a>
+    </div>
     <a href="https://t.me/ghostlogic_ai" class="nav-btn" target="_blank">
       <i class="fa-brands fa-telegram"></i> Написать Фирдавсу
     </a>
@@ -266,8 +277,8 @@ footer{background:var(--navy);padding:24px 16px;padding-bottom:calc(24px + env(s
 <!-- SCARCITY BANNER -->
 <div class="scarcity-bar" id="scarcityBar">
   <div class="scarcity-pulse"></div>
-  <span>🔥 Только в апреле: сайт за <strong>$99</strong> вместо $149 — осталось 4 места</span>
-  <a href="https://t.me/ghostlogic_ai" target="_blank">Забронировать →</a>
+  <span>💡 Сейчас цена $99 — для первых клиентов. Потом повышу до $149</span>
+  <a href="https://t.me/ghostlogic_ai" target="_blank">Написать →</a>
   <span class="x" onclick="document.getElementById('scarcityBar').remove()">✕</span>
 </div>
 
@@ -343,7 +354,7 @@ footer{background:var(--navy);padding:24px 16px;padding-bottom:calc(24px + env(s
   <div class="wrap">
     <span class="eyebrow">Примеры работ</span>
     <h2 class="sec-title">Как выглядит результат</h2>
-    <p class="sec-sub">Не шаблоны из конструктора — живые сайты под конкретный бизнес.</p>
+    <p class="sec-sub">Демо-сайты — так выглядит готовая работа. Такой же сделаю под ваш бизнес.</p>
     <div class="portfolio-grid">
 
       <div class="portfolio-card">
@@ -469,8 +480,8 @@ footer{background:var(--navy);padding:24px 16px;padding-bottom:calc(24px + env(s
         <div class="include-item">
           <div class="include-ico"><i class="fa-solid fa-mobile-screen"></i></div>
           <div>
-            <h4>Адаптация под телефон</h4>
-            <p>Сайт одинаково хорошо выглядит на любом экране</p>
+            <h4>Работает на любом устройстве</h4>
+            <p>Телефон, планшет, компьютер — сайт выглядит одинаково хорошо. 80% ваших клиентов заходят с телефона</p>
           </div>
         </div>
         <div class="include-item">
@@ -604,11 +615,11 @@ footer{background:var(--navy);padding:24px 16px;padding-bottom:calc(24px + env(s
       <p class="about-quote">«Я делаю сайты которые продают — а не просто красиво выглядят. Каждый элемент на месте: клиент видит цену, нажимает WhatsApp и пишет вам.»</p>
       <p class="about-accent">Работаю лично с каждым клиентом — без передачи задач на сторону и без звонков. Пишете в Telegram, получаете готовый сайт через 3 дня.</p>
       <div class="about-stack">
-        <span class="about-stack-label">Стек:</span>
-        <span><i class="fa-brands fa-html5" style="color:var(--navy);"></i> HTML</span>
-        <span><i class="fa-brands fa-css3-alt" style="color:var(--navy);"></i> CSS</span>
-        <span><i class="fa-brands fa-js" style="color:var(--navy);"></i> JavaScript</span>
-        <span><i class="fa-solid fa-brain" style="color:var(--navy);"></i> ИИ-инструменты</span>
+        <span class="about-stack-label">Что это значит для вас:</span>
+        <span><i class="fa-solid fa-check" style="color:var(--green);"></i> Сайт адаптирован под телефон, планшет и компьютер</span>
+        <span><i class="fa-solid fa-check" style="color:var(--green);"></i> Работает быстро — не грузится по 10 секунд</span>
+        <span><i class="fa-solid fa-check" style="color:var(--green);"></i> Виден в Google и Яндексе</span>
+        <span><i class="fa-solid fa-check" style="color:var(--green);"></i> Кнопка WhatsApp открывается в один клик</span>
       </div>
       <a href="https://t.me/ghostlogic_ai" class="about-cta" target="_blank">
         <i class="fa-brands fa-telegram" style="color:#229ed9;"></i> Написать напрямую
@@ -660,10 +671,10 @@ footer{background:var(--navy);padding:24px 16px;padding-bottom:calc(24px + env(s
   <div class="wrap">
     <div class="final-box">
       <div class="spots-pill">
-        <i class="fa-solid fa-fire" style="font-size:.55rem;"></i> Только в апреле — осталось 4 места
+        <i class="fa-solid fa-clock" style="font-size:.55rem;"></i> Цена $99 — только для первых клиентов. Потом будет дороже
       </div>
       <h2>Получите сайт за $99 за 3 дня</h2>
-      <p>Пришлите фото и прайс в Telegram — я отвечу в течение часа и скажу с чего начать. Без звонков, без предоплаты до старта.</p>
+      <p>Пришлите фото и прайс в Telegram — я отвечу в течение часа и скажу с чего начать. Работаю по предоплате 50% — это защита для обеих сторон: вы уверены что я не пропаду, я уверен что вы серьёзно настроены.</p>
       <a href="https://t.me/ghostlogic_ai" class="btn-gold" target="_blank">
         <i class="fa-brands fa-telegram"></i> Написать Фирдавсу в Telegram
       </a>
